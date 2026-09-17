@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { useAuth } from '../../context/AuthContext';
-import { useCourses } from '../../context/CourseContext';
+import { useAuth } from '../../context/useAuth';
+import { useCourses } from '../../context/useCourses';
 import {
   Menu,
   Bell,
@@ -13,8 +13,8 @@ import {
 } from 'lucide-react';
 import { toast } from 'react-toastify';
 
-const Navbar = ({ onToggleSidebar }) => {
-  const { user, logout } = useAuth();
+const Navbar = ({ onToggleSidebar, onOpenAddCourse }) => {
+  const { user, logout, switchRole, canManageCourses } = useAuth();
   const { searchQuery, setSearchQuery } = useCourses();
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [notificationsOpen, setNotificationsOpen] = useState(false);
@@ -47,6 +47,11 @@ const Navbar = ({ onToggleSidebar }) => {
     navigate('/courses');
   };
 
+  const roleStyles = {
+    Instructor: 'bg-indigo-50 text-indigo-700 border-indigo-200',
+    Student: 'bg-emerald-50 text-emerald-700 border-emerald-200'
+  };
+
   return (
     <header className="sticky top-0 z-30 bg-white/95 backdrop-blur-md border-b border-slate-200/80 px-4 sm:px-6 py-3.5 flex items-center justify-between">
       {/* Left: Mobile Toggle & Brand/Search */}
@@ -68,21 +73,26 @@ const Navbar = ({ onToggleSidebar }) => {
             placeholder="Search courses, instructors, topics..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-10 pr-4 py-2 bg-slate-100/80 border border-transparent rounded-xl text-sm text-slate-800 placeholder-slate-400 focus:bg-white focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100 transition-all outline-none"
+            className="w-full pl-10 pr-4 py-2 bg-slate-100/80 border border-transparent rounded-xl text-sm text-slate-800 placeholder-slate-400 focus:bg-white focus:border-indigo-600 focus:ring-2 focus:ring-indigo-100 transition-all outline-none"
           />
         </form>
       </div>
 
       {/* Right: Quick Action, Notifications, User Menu */}
       <div className="flex items-center gap-3">
-        {/* Quick Add Course Button (for Instructors/Admins) */}
-        <button
-          onClick={() => navigate('/courses', { state: { openAddModal: true } })}
-          className="hidden md:flex items-center gap-2 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 text-xs font-semibold px-3 py-2 rounded-xl border border-indigo-200/60 transition-colors"
-        >
-          <PlusCircle className="w-4 h-4 text-indigo-600" />
-          <span>New Course</span>
-        </button>
+        {/* Quick Add Course Button (for Instructors) */}
+        {canManageCourses && (
+          <button
+            onClick={() => {
+              if (onOpenAddCourse) onOpenAddCourse();
+              else navigate('/courses', { state: { openAddModal: true } });
+            }}
+            className="hidden md:flex items-center gap-2 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 text-xs font-semibold px-3 py-2 rounded-xl border border-indigo-200/60 transition-colors"
+          >
+            <PlusCircle className="w-4 h-4 text-indigo-600" />
+            <span>New Course</span>
+          </button>
+        )}
 
         {/* Notification Bell */}
         <div className="relative" ref={notifRef}>
@@ -100,7 +110,7 @@ const Navbar = ({ onToggleSidebar }) => {
             <div className="absolute right-0 mt-2 w-80 bg-white rounded-2xl shadow-xl border border-slate-100 p-4 animate-fade-in z-50">
               <div className="flex items-center justify-between pb-3 border-b border-slate-100 mb-3">
                 <span className="font-semibold text-slate-900 text-sm">Notifications</span>
-                <span className="text-xs bg-indigo-50 text-indigo-600 px-2 py-0.5 rounded-full font-medium">
+                <span className="text-xs bg-indigo-50 text-indigo-700 px-2 py-0.5 rounded-full font-medium">
                   2 New
                 </span>
               </div>
@@ -123,7 +133,7 @@ const Navbar = ({ onToggleSidebar }) => {
           <button
             type="button"
             onClick={() => setDropdownOpen(!dropdownOpen)}
-            className="flex items-center gap-2 p-1.5 pr-2.5 rounded-xl hover:bg-slate-100 transition-colors"
+            className="flex items-center gap-2.5 p-1.5 pr-2.5 rounded-xl hover:bg-slate-100 transition-colors"
           >
             <img
               src={user?.avatar || 'https://api.dicebear.com/7.x/avataaars/svg?seed=User'}
@@ -131,24 +141,56 @@ const Navbar = ({ onToggleSidebar }) => {
               className="w-9 h-9 rounded-xl object-cover ring-2 ring-indigo-500/20"
             />
             <div className="hidden md:block text-left">
-              <p className="text-xs font-semibold text-slate-800 leading-tight">
-                {user?.name || 'Student User'}
-              </p>
-              <p className="text-[11px] text-slate-400 font-medium">
-                {user?.role || 'Learner'}
+              <div className="flex items-center gap-1.5">
+                <p className="text-xs font-semibold text-slate-800 leading-tight">
+                  {user?.name || 'Student User'}
+                </p>
+                <span
+                  className={`text-[9px] uppercase font-bold px-1.5 py-0.5 rounded border ${
+                    roleStyles[user?.role] || roleStyles.Student
+                  }`}
+                >
+                  {user?.role || 'Student'}
+                </span>
+              </div>
+              <p className="text-[11px] text-slate-400 font-medium truncate max-w-[130px]">
+                {user?.email}
               </p>
             </div>
             <ChevronDown className="w-4 h-4 text-slate-400 hidden md:block" />
           </button>
 
           {dropdownOpen && (
-            <div className="absolute right-0 mt-2 w-56 bg-white rounded-2xl shadow-xl border border-slate-100 p-2 animate-fade-in z-50">
-              <div className="px-3 py-2 border-b border-slate-100 mb-1">
+            <div className="absolute right-0 mt-2 w-64 bg-white rounded-2xl shadow-xl border border-slate-100 p-2.5 animate-fade-in z-50">
+              <div className="px-3 py-2 border-b border-slate-100 mb-2">
                 <p className="text-sm font-semibold text-slate-800">{user?.name}</p>
                 <p className="text-xs text-slate-400 truncate">{user?.email}</p>
-                <span className="inline-block mt-1 text-[10px] uppercase font-bold tracking-wider bg-indigo-50 text-indigo-700 px-2 py-0.5 rounded-md">
-                  {user?.role || 'Student'}
-                </span>
+              </div>
+
+              {/* Role Switcher in dropdown */}
+              <div className="px-3 py-2 border-b border-slate-100 mb-2">
+                <p className="text-[10px] uppercase font-bold text-slate-400 tracking-wider mb-2">
+                  Switch Active Role
+                </p>
+                <div className="grid grid-cols-2 gap-1 bg-slate-100 p-1 rounded-xl">
+                  {['Student', 'Instructor'].map((r) => (
+                    <button
+                      key={r}
+                      type="button"
+                      onClick={() => {
+                        switchRole(r);
+                        toast.success(`Role changed to ${r}`);
+                      }}
+                      className={`text-[11px] py-1 rounded-lg font-bold transition-all ${
+                        user?.role === r
+                          ? 'bg-white text-slate-900 shadow-xs'
+                          : 'text-slate-500 hover:text-slate-900'
+                      }`}
+                    >
+                      {r}
+                    </button>
+                  ))}
+                </div>
               </div>
 
               <Link

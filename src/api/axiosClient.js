@@ -9,20 +9,44 @@ const axiosClient = axios.create({
   },
 });
 
-// Request interceptor
+// Request interceptor with styled DevTools console logging
 axiosClient.interceptors.request.use(
   (config) => {
-    // Inject auth token or custom headers if available
+    const method = config.method ? config.method.toUpperCase() : 'GET';
+    const fullUrl = `${config.baseURL || ''}${config.url || ''}`;
+    console.log(
+      `%c📡 [Third-Party API Request] %c${method} %c${fullUrl}`,
+      'color: #4f46e5; font-weight: bold;',
+      'color: #059669; font-weight: bold;',
+      'color: #334155;'
+    );
     return config;
   },
-  (error) => Promise.reject(error)
+  (error) => {
+    console.error('API Request Error:', error);
+    return Promise.reject(error);
+  }
 );
 
-// Response interceptor
+// Response interceptor with DevTools logging
 axiosClient.interceptors.response.use(
-  (response) => response.data,
+  (response) => {
+    const method = response.config?.method ? response.config.method.toUpperCase() : 'GET';
+    console.log(
+      `%c✅ [Third-Party API Response] %c${method} %c${response.config?.url || ''} %c(Status ${response.status})`,
+      'color: #059669; font-weight: bold;',
+      'color: #4f46e5; font-weight: bold;',
+      'color: #334155;',
+      'color: #64748b;'
+    );
+    return response.data;
+  },
   (error) => {
-    console.warn('API call failed, falling back to local storage cache:', error?.message);
+    console.warn(
+      `%c⚠️ [Third-Party API Warning] %c${error?.config?.url || 'Request'} failed: ${error?.message}. Falling back to local storage cache.`,
+      'color: #d97706; font-weight: bold;',
+      'color: #dc2626;'
+    );
     return Promise.reject(error);
   }
 );

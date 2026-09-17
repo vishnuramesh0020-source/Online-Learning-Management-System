@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import Modal from '../common/Modal';
-import { useCourses } from '../../context/CourseContext';
+import { useCourses } from '../../context/useCourses';
 import { CATEGORIES } from '../../utils/dummyData';
 import { toast } from 'react-toastify';
 import { Sparkles, Image, BookOpen, User, Tag, Clock, Layers, DollarSign, Star } from 'lucide-react';

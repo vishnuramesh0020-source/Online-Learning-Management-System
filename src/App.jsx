@@ -11,6 +11,11 @@ import DashboardPage from './pages/dashboard/DashboardPage';
 import CourseListPage from './pages/courses/CourseListPage';
 import CourseDetailPage from './pages/courses/CourseDetailPage';
 import EnrolledCoursesPage from './pages/courses/EnrolledCoursesPage';
+import StudentListPage from './pages/students/StudentListPage';
+import EnrollmentManagementPage from './pages/enrollments/EnrollmentManagementPage';
+import LearningProgressPage from './pages/progress/LearningProgressPage';
+import InstructorListPage from './pages/instructors/InstructorListPage';
+import InstructorProfilePage from './pages/instructors/InstructorProfilePage';
 import NotFoundPage from './pages/NotFoundPage';
 
 function App() {
@@ -37,6 +42,11 @@ function App() {
           <Route path="/courses" element={<CourseListPage />} />
           <Route path="/courses/:id" element={<CourseDetailPage />} />
           <Route path="/my-courses" element={<EnrolledCoursesPage />} />
+          <Route path="/students" element={<StudentListPage />} />
+          <Route path="/enrollments" element={<EnrollmentManagementPage />} />
+          <Route path="/progress" element={<LearningProgressPage />} />
+          <Route path="/instructors" element={<InstructorListPage />} />
+          <Route path="/instructors/:id" element={<InstructorProfilePage />} />
         </Route>
 
         {/* 404 Catch All */}

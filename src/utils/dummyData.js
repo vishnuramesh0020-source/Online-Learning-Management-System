@@ -259,7 +259,7 @@ export const RECENT_ACTIVITIES = [
 
 export const DEFAULT_USERS = [
   {
-    id: "usr_admin",
+    id: "usr_instructor",
     name: "Dr. Sarah Jenkins",
     email: "instructor@lms.com",
     password: "password123",
@@ -273,5 +273,250 @@ export const DEFAULT_USERS = [
     password: "password123",
     role: "Student",
     avatar: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150&auto=format&fit=crop&q=80"
+  },
+  {
+    id: "usr_educationpro",
+    name: "Education Pro Student",
+    email: "example.educationpro@gmail.com",
+    password: "password123",
+    role: "Student",
+    avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80"
   }
+];
+
+export const INITIAL_STUDENTS = [
+  {
+    id: "stu_1",
+    fullName: "Alex Morgan",
+    email: "alex.morgan@educationpro.com",
+    phone: "+91 98765 43210",
+    address: "42 Richmond Road, Bangalore, Karnataka 560025",
+    qualification: "B.Tech in Computer Science",
+    enrollmentDate: "2026-08-10",
+    avatar: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150&auto=format&fit=crop&q=80"
+  },
+  {
+    id: "stu_2",
+    fullName: "Priya Sundaram",
+    email: "priya.sundaram@gmail.com",
+    phone: "+91 98451 23456",
+    address: "15 Anna Nagar 2nd Avenue, Chennai, Tamil Nadu 600040",
+    qualification: "M.Sc Data Science & AI",
+    enrollmentDate: "2026-08-15",
+    avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&auto=format&fit=crop&q=80"
+  },
+  {
+    id: "stu_3",
+    fullName: "Rohan Varma",
+    email: "rohan.varma@outlook.com",
+    phone: "+91 97112 88491",
+    address: "B-204 Green Valley, Cyber City, Gurgaon, Haryana 122002",
+    qualification: "Bachelor of Computer Applications (BCA)",
+    enrollmentDate: "2026-08-22",
+    avatar: "https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?w=150&auto=format&fit=crop&q=80"
+  },
+  {
+    id: "stu_4",
+    fullName: "Ananya Iyer",
+    email: "ananya.iyer@yahoo.com",
+    phone: "+91 94432 10987",
+    address: "78 Jubilee Hills, Road No. 36, Hyderabad, Telangana 500033",
+    qualification: "B.Des in UI/UX Interaction Design",
+    enrollmentDate: "2026-09-01",
+    avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80"
+  },
+  {
+    id: "stu_5",
+    fullName: "Devraj Mukherjee",
+    email: "devraj.mukherjee@gmail.com",
+    phone: "+91 98300 76543",
+    address: "12 Salt Lake Sector V, Kolkata, West Bengal 700091",
+    qualification: "B.Sc Information Technology",
+    enrollmentDate: "2026-09-05",
+    avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80"
+  },
+  {
+    id: "stu_6",
+    fullName: "Kavya Nair",
+    email: "kavya.nair@hotmail.com",
+    phone: "+91 99887 65432",
+    address: "305 Marine Drive, Nariman Point, Mumbai, Maharashtra 400021",
+    qualification: "Master of Computer Applications (MCA)",
+    enrollmentDate: "2026-09-10",
+    avatar: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&auto=format&fit=crop&q=80"
+  },
+  {
+    id: "stu_7",
+    fullName: "Aditya Kulkarni",
+    email: "aditya.kulkarni@gmail.com",
+    phone: "+91 91234 56780",
+    address: "88 FC Road, Shivaji Nagar, Pune, Maharashtra 411005",
+    qualification: "B.Tech Electronics & Communication",
+    enrollmentDate: "2026-09-12",
+    avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&auto=format&fit=crop&q=80"
+  }
+];
+
+export const INITIAL_INSTRUCTORS = [
+  {
+    id: "inst_1",
+    name: "Dr. Sarah Jenkins",
+    email: "sarah.jenkins@educationpro.com",
+    experience: "10 Years",
+    specialization: "Full-Stack Web Development & Cloud Architecture",
+    profileImage: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=300&auto=format&fit=crop&q=80",
+    bio: "Senior Software Architect and PhD in Distributed Systems. Sarah has trained over 15,000 engineers globally in modern React, Next.js, and high-performance server architectures.",
+    phone: "+1 (555) 234-5678",
+    rating: 4.9,
+    assignedCourses: [1]
+  },
+  {
+    id: "inst_2",
+    name: "Prof. Michael Chen",
+    email: "michael.chen@educationpro.com",
+    experience: "12 Years",
+    specialization: "Data Science, Machine Learning & Python",
+    profileImage: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&auto=format&fit=crop&q=80",
+    bio: "Former Principal Data Scientist at Silicon Valley tech giants. Michael specializes in predictive modeling, deep learning architectures, and scalable analytics pipelines with Python.",
+    phone: "+1 (555) 345-6789",
+    rating: 4.85,
+    assignedCourses: [2]
+  },
+  {
+    id: "inst_3",
+    name: "Elena Rostova",
+    email: "elena.rostova@educationpro.com",
+    experience: "8 Years",
+    specialization: "UI/UX Design Systems & Interactive Prototyping",
+    profileImage: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=300&auto=format&fit=crop&q=80",
+    bio: "Design Lead and international speaker. Elena creates enterprise design tokens, scalable component systems in Figma, and human-centered digital experiences for Fortune 500 apps.",
+    phone: "+1 (555) 456-7890",
+    rating: 4.8,
+    assignedCourses: [3]
+  },
+  {
+    id: "inst_4",
+    name: "David Miller",
+    email: "david.miller@educationpro.com",
+    experience: "14 Years",
+    specialization: "DevOps, Kubernetes & AWS Cloud Architecture",
+    profileImage: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=300&auto=format&fit=crop&q=80",
+    bio: "Certified AWS Solutions Architect Professional. David designs zero-downtime CI/CD pipelines, Kubernetes orchestrations, and secure multi-region cloud infrastructures.",
+    phone: "+1 (555) 567-8901",
+    rating: 4.92,
+    assignedCourses: [4]
+  },
+  {
+    id: "inst_5",
+    name: "Sophia Rodriguez",
+    email: "sophia.rodriguez@educationpro.com",
+    experience: "7 Years",
+    specialization: "Cross-Platform Mobile Apps with Flutter & Dart",
+    profileImage: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=300&auto=format&fit=crop&q=80",
+    bio: "Mobile app developer with over 30 published iOS & Android apps. Expert in reactive state management, offline-first architectures, and smooth 60fps Flutter animations.",
+    phone: "+1 (555) 678-9012",
+    rating: 4.88,
+    assignedCourses: [5]
+  },
+  {
+    id: "inst_6",
+    name: "Dr. Alan Vance",
+    email: "alan.vance@educationpro.com",
+    experience: "15 Years",
+    specialization: "Artificial Intelligence, Large Language Models & RAG",
+    profileImage: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=300&auto=format&fit=crop&q=80",
+    bio: "Pioneer researcher in neural language modeling and generative AI. Alan guides engineering teams in deploying production-grade LLMs, vector search, and autonomous multi-agent pipelines.",
+    phone: "+1 (555) 789-0123",
+    rating: 4.96,
+    assignedCourses: [6]
+  }
+];
+
+export const INITIAL_ENROLLMENTS = [
+  {
+    id: "enr_101",
+    studentId: "stu_1",
+    studentName: "Alex Morgan",
+    studentEmail: "alex.morgan@educationpro.com",
+    courseId: 1,
+    courseTitle: "Mastering React 19 & Next.js 15 Full-Stack",
+    courseThumbnail: "https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=800&auto=format&fit=crop&q=80",
+    instructor: "Dr. Sarah Jenkins",
+    enrollmentDate: "2026-08-12",
+    status: "In Progress",
+    progress: 65
+  },
+  {
+    id: "enr_102",
+    studentId: "stu_1",
+    studentName: "Alex Morgan",
+    studentEmail: "alex.morgan@educationpro.com",
+    courseId: 3,
+    courseTitle: "Modern UI/UX Design with Figma: Concept to Prototype",
+    courseThumbnail: "https://images.unsplash.com/photo-1581291518655-9523c932edcf?w=800&auto=format&fit=crop&q=80",
+    instructor: "Elena Rostova",
+    enrollmentDate: "2026-08-18",
+    status: "Completed",
+    progress: 100
+  },
+  {
+    id: "enr_103",
+    studentId: "stu_2",
+    studentName: "Priya Sundaram",
+    studentEmail: "priya.sundaram@gmail.com",
+    courseId: 2,
+    courseTitle: "Complete Python for Data Science and Machine Learning",
+    courseThumbnail: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&auto=format&fit=crop&q=80",
+    instructor: "Prof. Michael Chen",
+    enrollmentDate: "2026-08-16",
+    status: "In Progress",
+    progress: 45
+  },
+  {
+    id: "enr_104",
+    studentId: "stu_3",
+    studentName: "Rohan Varma",
+    studentEmail: "rohan.varma@outlook.com",
+    courseId: 1,
+    courseTitle: "Mastering React 19 & Next.js 15 Full-Stack",
+    courseThumbnail: "https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=800&auto=format&fit=crop&q=80",
+    instructor: "Dr. Sarah Jenkins",
+    enrollmentDate: "2026-08-25",
+    status: "In Progress",
+    progress: 30
+  },
+  {
+    id: "enr_105",
+    studentId: "stu_4",
+    studentName: "Ananya Iyer",
+    studentEmail: "ananya.iyer@yahoo.com",
+    courseId: 3,
+    courseTitle: "Modern UI/UX Design with Figma: Concept to Prototype",
+    courseThumbnail: "https://images.unsplash.com/photo-1581291518655-9523c932edcf?w=800&auto=format&fit=crop&q=80",
+    instructor: "Elena Rostova",
+    enrollmentDate: "2026-09-02",
+    status: "In Progress",
+    progress: 80
+  },
+  {
+    id: "enr_106",
+    studentId: "stu_5",
+    studentName: "Devraj Mukherjee",
+    studentEmail: "devraj.mukherjee@gmail.com",
+    courseId: 4,
+    courseTitle: "Cloud Computing & DevOps with AWS, Docker & Kubernetes",
+    courseThumbnail: "https://images.unsplash.com/photo-1667372393119-3d4c48d07fc9?w=800&auto=format&fit=crop&q=80",
+    instructor: "David Miller",
+    enrollmentDate: "2026-09-06",
+    status: "In Progress",
+    progress: 20
+  }
+];
+
+export const DEFAULT_COURSE_MODULES = [
+  "Module 1: Foundations, Tooling & Core Architecture",
+  "Module 2: Practical Implementation & Workflow Patterns",
+  "Module 3: Advanced Concepts, State & Data Flow",
+  "Module 4: Testing, Performance Optimization & Security",
+  "Module 5: Real-World Capstone Project & Production Deployment"
 ];

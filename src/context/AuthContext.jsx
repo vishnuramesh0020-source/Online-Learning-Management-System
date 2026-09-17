@@ -1,13 +1,16 @@
-import { createContext, useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
+import { AuthContext } from './contexts';
 import { getStorageItem, setStorageItem, removeStorageItem, STORAGE_KEYS } from '../utils/storage';
 import { DEFAULT_USERS } from '../utils/dummyData';
 
-export const AuthContext = createContext(null);
-export { useAuth } from './useAuth';
-
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(() => {
-    return getStorageItem(STORAGE_KEYS.AUTH_USER, null);
+    const active = getStorageItem(STORAGE_KEYS.AUTH_USER, null);
+    if (active?.role === 'Admin') {
+      active.role = 'Instructor';
+      setStorageItem(STORAGE_KEYS.AUTH_USER, active);
+    }
+    return active;
   });
 
   const [users, setUsers] = useState(() => {
@@ -16,7 +19,11 @@ export const AuthProvider = ({ children }) => {
       setStorageItem(STORAGE_KEYS.USERS, DEFAULT_USERS);
       return DEFAULT_USERS;
     }
-    return existing;
+    const sanitized = existing.filter((u) => u.role !== 'Admin');
+    if (sanitized.length !== existing.length) {
+      setStorageItem(STORAGE_KEYS.USERS, sanitized);
+    }
+    return sanitized;
   });
 
   const [loading, setLoading] = useState(false);
@@ -108,6 +115,24 @@ export const AuthProvider = ({ children }) => {
     removeStorageItem(STORAGE_KEYS.AUTH_USER);
   };
 
+  // Switch role directly for quick role preview
+  const switchRole = (newRole) => {
+    if (!user) return;
+    const updatedUser = { ...user, role: newRole };
+    setUser(updatedUser);
+    setStorageItem(STORAGE_KEYS.AUTH_USER, updatedUser);
+
+    // Also update in users list if present
+    setUsers((prev) =>
+      prev.map((u) => (u.email.toLowerCase() === user.email.toLowerCase() ? { ...u, role: newRole } : u))
+    );
+    return updatedUser;
+  };
+
+  const isStudent = user?.role === 'Student';
+  const isInstructor = user?.role === 'Instructor';
+  const canManageCourses = isInstructor;
+
   return (
     <AuthContext.Provider
       value={{
@@ -115,6 +140,11 @@ export const AuthProvider = ({ children }) => {
         users,
         loading,
         isAuthenticated: !!user,
+        role: user?.role || 'Student',
+        isStudent,
+        isInstructor,
+        canManageCourses,
+        switchRole,
         login,
         register,
         forgotPassword,

@@ -3,7 +3,7 @@ import { Home, ArrowLeft } from 'lucide-react';
 
 const NotFoundPage = () => {
   return (
-    <div className="min-h-screen bg-slate-50 flex flex-col items-center justify-center p-6 text-center animate-fade-in">
+    <div className="min-h-screen bg-white flex flex-col items-center justify-center p-6 text-center animate-fade-in">
       <div className="w-20 h-20 rounded-3xl bg-indigo-50 text-indigo-600 flex items-center justify-center mb-6 border border-indigo-100 shadow-sm">
         <span className="text-3xl font-black">404</span>
       </div>

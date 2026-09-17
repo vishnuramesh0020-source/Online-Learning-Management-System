@@ -1,6 +1,8 @@
 import { useOutletContext, Link } from 'react-router-dom';
-import { useAuth } from '../../context/AuthContext';
-import { useCourses } from '../../context/CourseContext';
+import { useAuth } from '../../context/useAuth';
+import { useCourses } from '../../context/useCourses';
+import { useStudents } from '../../context/useStudents';
+import { useInstructors } from '../../context/useInstructors';
 import StatCard from '../../components/dashboard/StatCard';
 import UpcomingClasses from '../../components/dashboard/UpcomingClasses';
 import RecentActivities from '../../components/dashboard/RecentActivities';
@@ -18,18 +20,17 @@ import {
 
 const DashboardPage = () => {
   const { user } = useAuth();
-  const { courses, enrolledCourseIds } = useCourses();
+  const { courses, enrolledCourseIds, enrollments } = useCourses();
+  const { students } = useStudents();
+  const { instructors } = useInstructors();
   const { handleOpenAddCourse } = useOutletContext() || {};
 
-  // Compute metrics dynamically
+  // Compute metrics dynamically from registered database collections
   const totalCourses = courses.length;
-  const uniqueInstructors = new Set(courses.map((c) => c.instructor)).size;
-  const totalStudentsCount = courses.reduce(
-    (acc, curr) => acc + (Number(curr.enrolledStudents) || 0),
-    0
-  );
+  const totalInstructors = instructors.length;
+  const totalStudentsCount = students.length;
   const enrolledCount = enrolledCourseIds.length;
-  const completedCount = Math.max(1, Math.floor(enrolledCount / 2));
+  const completedCount = enrollments.filter((e) => e.status === 'Completed').length;
 
   // Enrolled courses details
   const enrolledCourses = courses.filter((c) =>
@@ -95,9 +96,9 @@ const DashboardPage = () => {
         />
         <StatCard
           title="Total Instructors"
-          value={uniqueInstructors}
+          value={totalInstructors}
           icon={GraduationCap}
-          trend="Top Tier"
+          trend="Faculty"
           trendLabel="verified"
           color="violet"
         />

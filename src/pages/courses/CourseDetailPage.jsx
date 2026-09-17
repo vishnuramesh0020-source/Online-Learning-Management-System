@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
-import { useCourses } from '../../context/CourseContext';
+import { useAuth } from '../../context/useAuth';
+import { useCourses } from '../../context/useCourses';
 import CourseFormModal from '../../components/courses/CourseFormModal';
 import Modal from '../../components/common/Modal';
 import {
@@ -22,6 +23,7 @@ import { toast } from 'react-toastify';
 const CourseDetailPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const { canManageCourses } = useAuth();
   const { courses, enrolledCourseIds, toggleEnrollment, deleteCourse } = useCourses();
 
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
@@ -108,22 +110,26 @@ const CourseDetailPage = () => {
           >
             <Share2 className="w-4 h-4" />
           </button>
-          <button
-            type="button"
-            onClick={() => setIsEditModalOpen(true)}
-            className="flex items-center gap-1.5 px-3 py-2 rounded-xl border border-slate-200 text-slate-700 hover:bg-slate-100 text-xs font-semibold transition-colors"
-          >
-            <Edit2 className="w-3.5 h-3.5" />
-            <span>Edit</span>
-          </button>
-          <button
-            type="button"
-            onClick={() => setIsDeleteModalOpen(true)}
-            className="flex items-center gap-1.5 px-3 py-2 rounded-xl border border-rose-200 text-rose-600 hover:bg-rose-50 text-xs font-semibold transition-colors"
-          >
-            <Trash2 className="w-3.5 h-3.5" />
-            <span>Delete</span>
-          </button>
+          {canManageCourses && (
+            <>
+              <button
+                type="button"
+                onClick={() => setIsEditModalOpen(true)}
+                className="flex items-center gap-1.5 px-3 py-2 rounded-xl border border-slate-200 text-slate-700 hover:bg-slate-100 text-xs font-semibold transition-colors"
+              >
+                <Edit2 className="w-3.5 h-3.5" />
+                <span>Edit</span>
+              </button>
+              <button
+                type="button"
+                onClick={() => setIsDeleteModalOpen(true)}
+                className="flex items-center gap-1.5 px-3 py-2 rounded-xl border border-rose-200 text-rose-600 hover:bg-rose-50 text-xs font-semibold transition-colors"
+              >
+                <Trash2 className="w-3.5 h-3.5" />
+                <span>Delete</span>
+              </button>
+            </>
+          )}
         </div>
       </div>
 
@@ -298,15 +304,13 @@ const CourseDetailPage = () => {
       </div>
 
       {/* Edit Course Modal */}
-      <CourseFormModal
-        isOpen={isEditModalOpen}
-        onClose={() => setIsEditModalOpen(false)}
-        courseToEdit={course}
-        onSuccess={() => {
-          const updated = courses.find((c) => String(c.id) === String(id));
-          if (updated) setCourse(updated);
-        }}
-      />
+      {isEditModalOpen && (
+        <CourseFormModal
+          isOpen={isEditModalOpen}
+          onClose={() => setIsEditModalOpen(false)}
+          courseToEdit={course}
+        />
+      )}
 
       {/* Delete Confirmation Modal */}
       <Modal

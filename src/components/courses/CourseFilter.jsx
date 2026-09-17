@@ -1,6 +1,6 @@
 import { Search, RotateCcw, ArrowUpDown, Filter } from 'lucide-react';
 import { CATEGORIES, COURSE_LEVELS } from '../../utils/dummyData';
-import { useCourses } from '../../context/CourseContext';
+import { useCourses } from '../../context/useCourses';
 
 const CourseFilter = () => {
   const {

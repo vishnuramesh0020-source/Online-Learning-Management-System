@@ -6,12 +6,16 @@ import {
   PlusCircle,
   X,
   Sparkles,
-  Layers
+  Layers,
+  Users,
+  ClipboardCheck,
+  TrendingUp,
+  Award
 } from 'lucide-react';
-import { useAuth } from '../../context/AuthContext';
+import { useAuth } from '../../context/useAuth';
 
 const Sidebar = ({ isOpen, onClose, onOpenAddCourse }) => {
-  const { user } = useAuth();
+  const { user, canManageCourses } = useAuth();
 
   const navLinks = [
     {
@@ -26,8 +30,28 @@ const Sidebar = ({ isOpen, onClose, onOpenAddCourse }) => {
     },
     {
       to: '/my-courses',
-      label: 'Enrolled Courses',
+      label: 'My Courses',
       icon: BookOpen
+    },
+    {
+      to: '/students',
+      label: 'Students',
+      icon: Users
+    },
+    {
+      to: '/enrollments',
+      label: 'Enrollments',
+      icon: ClipboardCheck
+    },
+    {
+      to: '/progress',
+      label: 'Learning Progress',
+      icon: TrendingUp
+    },
+    {
+      to: '/instructors',
+      label: 'Instructors',
+      icon: Award
     }
   ];
 
@@ -55,7 +79,7 @@ const Sidebar = ({ isOpen, onClose, onOpenAddCourse }) => {
             </div>
             <div>
               <span className="font-bold text-lg text-slate-900 tracking-tight leading-none block">
-                EduSphere
+                Education Pro
               </span>
               <span className="text-[10px] text-indigo-600 font-semibold tracking-wider uppercase">
                 Learning LMS
@@ -98,22 +122,24 @@ const Sidebar = ({ isOpen, onClose, onOpenAddCourse }) => {
             );
           })}
 
-          <div className="pt-6">
-            <p className="px-3 text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-2">
-              Management
-            </p>
-            <button
-              type="button"
-              onClick={() => {
-                onClose();
-                if (onOpenAddCourse) onOpenAddCourse();
-              }}
-              className="w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl font-medium text-sm text-indigo-700 bg-indigo-50 hover:bg-indigo-100/80 border border-indigo-200/50 transition-colors"
-            >
-              <PlusCircle className="w-4 h-4 text-indigo-600" />
-              <span>Create New Course</span>
-            </button>
-          </div>
+          {canManageCourses && (
+            <div className="pt-6">
+              <p className="px-3 text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-2">
+                Management
+              </p>
+              <button
+                type="button"
+                onClick={() => {
+                  onClose();
+                  if (onOpenAddCourse) onOpenAddCourse();
+                }}
+                className="w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl font-medium text-sm text-indigo-700 bg-indigo-50 hover:bg-indigo-100/80 border border-indigo-200/50 transition-colors"
+              >
+                <PlusCircle className="w-4 h-4 text-indigo-600" />
+                <span>Create New Course</span>
+              </button>
+            </div>
+          )}
         </div>
 
         {/* Bottom Card / User Profile Info */}
@@ -121,10 +147,16 @@ const Sidebar = ({ isOpen, onClose, onOpenAddCourse }) => {
           <div className="bg-gradient-to-br from-indigo-50 to-violet-50 rounded-2xl p-3.5 border border-indigo-100/70">
             <div className="flex items-center gap-2 mb-1.5">
               <Sparkles className="w-4 h-4 text-indigo-600" />
-              <span className="text-xs font-bold text-indigo-900">Pro Student Plan</span>
+              <span className="text-xs font-bold text-indigo-900">
+                {user?.role === 'Instructor'
+                  ? 'Instructor Portal'
+                  : 'Student Learner'}
+              </span>
             </div>
             <p className="text-[11px] text-slate-600 leading-relaxed mb-3">
-              Full access to courses, interactive labs & certificates.
+              {user?.role === 'Instructor'
+                ? 'Author courses, build curriculum and track enrolled learners.'
+                : 'Full access to courses, interactive labs & certificates.'}
             </p>
             <div className="flex items-center gap-2 pt-2 border-t border-indigo-100">
               <img

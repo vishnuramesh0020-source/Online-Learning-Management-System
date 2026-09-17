@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import { useCourses } from '../../context/CourseContext';
+import { useAuth } from '../../context/useAuth';
+import { useCourses } from '../../context/useCourses';
 import CourseCard from '../../components/courses/CourseCard';
 import CourseFilter from '../../components/courses/CourseFilter';
 import CourseFormModal from '../../components/courses/CourseFormModal';
@@ -20,8 +21,10 @@ import { toast } from 'react-toastify';
 
 const CourseListPage = () => {
   const location = useLocation();
+  const { canManageCourses } = useAuth();
   const {
     loading,
+    isSyncing,
     error,
     filteredCourses,
     paginatedCourses,
@@ -30,6 +33,7 @@ const CourseListPage = () => {
     totalPages,
     itemsPerPage,
     fetchCourses,
+    syncCoursesFromApi,
     deleteCourse,
     resetFilters
   } = useCourses();
@@ -67,15 +71,25 @@ const CourseListPage = () => {
       {/* Page Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
+          <div className="flex items-center gap-2 mb-2">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-50 border border-indigo-100 text-indigo-700 text-xs font-semibold">
+              <BookOpen className="w-3.5 h-3.5" />
+              <span>Course Catalog</span>
+            </div>
+            <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-50 border border-emerald-100 text-emerald-700 text-[11px] font-semibold">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+              <span>DummyJSON API Live</span>
+            </div>
+          </div>
           <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight">
             Course Management
           </h1>
           <p className="text-sm text-slate-500 mt-1">
-            Browse, search, edit, or create industry-leading courses.
+            Browse, search, edit, or create industry-leading courses connected to third-party REST API.
           </p>
         </div>
 
-        <div className="flex items-center gap-2.5">
+        <div className="flex items-center gap-2.5 flex-wrap">
           {/* Grid / List Switcher */}
           <div className="hidden sm:inline-flex bg-slate-100 p-1 rounded-xl border border-slate-200">
             <button
@@ -104,15 +118,29 @@ const CourseListPage = () => {
             </button>
           </div>
 
-          {/* Add Course Trigger */}
+          {/* Sync from Third-Party API Button */}
           <button
             type="button"
-            onClick={() => setIsAddModalOpen(true)}
-            className="flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold px-4 py-2.5 rounded-xl shadow-md shadow-indigo-600/20 active:scale-95 transition-all"
+            onClick={syncCoursesFromApi}
+            disabled={isSyncing}
+            className="flex items-center gap-2 bg-white hover:bg-slate-50 text-slate-700 border border-slate-200 text-xs sm:text-sm font-semibold px-4 py-2.5 rounded-xl shadow-xs active:scale-95 transition-all disabled:opacity-60 cursor-pointer"
+            title="Fetch live courses from DummyJSON Third-Party REST API"
           >
-            <PlusCircle className="w-4 h-4" />
-            <span>Add Course</span>
+            <RefreshCw className={`w-4 h-4 text-indigo-600 ${isSyncing ? 'animate-spin' : ''}`} />
+            <span>{isSyncing ? 'Syncing...' : 'Sync API Courses'}</span>
           </button>
+
+          {/* Add Course Trigger (Instructors only) */}
+          {canManageCourses && (
+            <button
+              type="button"
+              onClick={() => setIsAddModalOpen(true)}
+              className="flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white text-xs sm:text-sm font-semibold px-4 py-2.5 rounded-xl shadow-md shadow-indigo-600/20 active:scale-95 transition-all cursor-pointer"
+            >
+              <PlusCircle className="w-4 h-4" />
+              <span>Add Course</span>
+            </button>
+          )}
         </div>
       </div>
 
@@ -163,13 +191,15 @@ const CourseListPage = () => {
             >
               Reset Filters
             </button>
-            <button
-              type="button"
-              onClick={() => setIsAddModalOpen(true)}
-              className="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold rounded-xl shadow-xs transition-colors"
-            >
-              Add New Course
-            </button>
+            {canManageCourses && (
+              <button
+                type="button"
+                onClick={() => setIsAddModalOpen(true)}
+                className="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold rounded-xl shadow-xs transition-colors"
+              >
+                Add New Course
+              </button>
+            )}
           </div>
         </div>
       ) : (
@@ -207,17 +237,21 @@ const CourseListPage = () => {
       )}
 
       {/* Add Course Modal */}
-      <CourseFormModal
-        isOpen={isAddModalOpen}
-        onClose={() => setIsAddModalOpen(false)}
-      />
+      {isAddModalOpen && (
+        <CourseFormModal
+          isOpen={isAddModalOpen}
+          onClose={() => setIsAddModalOpen(false)}
+        />
+      )}
 
       {/* Edit Course Modal */}
-      <CourseFormModal
-        isOpen={Boolean(courseToEdit)}
-        onClose={() => setCourseToEdit(null)}
-        courseToEdit={courseToEdit}
-      />
+      {courseToEdit && (
+        <CourseFormModal
+          isOpen={Boolean(courseToEdit)}
+          onClose={() => setCourseToEdit(null)}
+          courseToEdit={courseToEdit}
+        />
+      )}
 
       {/* Delete Confirmation Modal */}
       <Modal

@@ -4,7 +4,6 @@ import Navbar from '../components/common/Navbar';
 import Sidebar from '../components/common/Sidebar';
 import CourseFormModal from '../components/courses/CourseFormModal';
 import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 
 const MainLayout = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -20,7 +19,7 @@ const MainLayout = () => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 flex">
+    <div className="min-h-screen bg-white flex">
       {/* Toast Notification Container */}
       <ToastContainer
         position="top-right"
@@ -32,7 +31,7 @@ const MainLayout = () => {
         pauseOnFocusLoss
         draggable
         pauseOnHover
-        theme="colored"
+        theme="light"
       />
 
       {/* Navigation Sidebar */}
@@ -55,11 +54,13 @@ const MainLayout = () => {
       </div>
 
       {/* Add Course Modal */}
-      <CourseFormModal
-        isOpen={isAddCourseModalOpen}
-        onClose={() => setIsAddCourseModalOpen(false)}
-        onSuccess={handleCourseCreated}
-      />
+      {isAddCourseModalOpen && (
+        <CourseFormModal
+          isOpen={isAddCourseModalOpen}
+          onClose={() => setIsAddCourseModalOpen(false)}
+          onSuccess={handleCourseCreated}
+        />
+      )}
     </div>
   );
 };

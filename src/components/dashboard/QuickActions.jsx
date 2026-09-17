@@ -1,9 +1,11 @@
 import { useNavigate } from 'react-router-dom';
-import { Compass, PlusCircle, BookOpen, Download, Zap } from 'lucide-react';
+import { useAuth } from '../../context/useAuth';
+import { Compass, PlusCircle, BookOpen, Download, Zap, Award } from 'lucide-react';
 import { toast } from 'react-toastify';
 
 const QuickActions = ({ onOpenAddCourse }) => {
   const navigate = useNavigate();
+  const { canManageCourses } = useAuth();
 
   const actions = [
     {
@@ -13,13 +15,23 @@ const QuickActions = ({ onOpenAddCourse }) => {
       color: 'from-blue-600 to-indigo-600',
       action: () => navigate('/courses')
     },
-    {
-      title: 'Create Course',
-      description: 'Add new course with details',
-      icon: PlusCircle,
-      color: 'from-indigo-600 to-violet-600',
-      action: onOpenAddCourse || (() => navigate('/courses', { state: { openAddModal: true } }))
-    },
+    canManageCourses
+      ? {
+          title: 'Create Course',
+          description: 'Add new course with details',
+          icon: PlusCircle,
+          color: 'from-indigo-600 to-violet-600',
+          action: onOpenAddCourse || (() => navigate('/courses', { state: { openAddModal: true } }))
+        }
+      : {
+          title: 'My Certificates',
+          description: 'View & download course honors',
+          icon: Award,
+          color: 'from-amber-500 to-orange-500',
+          action: () => {
+            toast.success('Certificate repository loaded. All credentials verified.');
+          }
+        },
     {
       title: 'My Enrolled',
       description: 'Continue your active lessons',
@@ -33,7 +45,7 @@ const QuickActions = ({ onOpenAddCourse }) => {
       icon: Download,
       color: 'from-emerald-600 to-teal-600',
       action: () => {
-        toast.success('EduSphere LMS Course Catalog 2026 downloaded successfully!');
+        toast.success('Education Pro LMS Course Catalog 2026 downloaded successfully!');
       }
     }
   ];

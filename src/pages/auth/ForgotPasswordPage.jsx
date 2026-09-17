@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
-import { useAuth } from '../../context/AuthContext';
-import { Mail, ArrowLeft, Send, CheckCircle2 } from 'lucide-react';
+import { useAuth } from '../../context/useAuth';
+import { CheckCircle2, ArrowLeft } from 'lucide-react';
 import { toast } from 'react-toastify';
 
 const ForgotPasswordPage = () => {
@@ -21,43 +21,35 @@ const ForgotPasswordPage = () => {
       await forgotPassword(data.email);
       setSubmittedEmail(data.email);
       setSubmitted(true);
-      toast.success('Password reset instructions sent to your inbox!');
+      toast.success('Password reset instructions sent to your email!');
     } catch (err) {
       toast.error(err.message || 'Unable to process reset request.');
     }
   };
 
   return (
-    <div>
-      <Link
-        to="/login"
-        className="inline-flex items-center gap-1.5 text-xs text-slate-500 hover:text-slate-800 font-semibold mb-6 transition-colors"
-      >
-        <ArrowLeft className="w-3.5 h-3.5" />
-        <span>Back to Sign In</span>
-      </Link>
-
+    <div className="w-full animate-fade-in">
       {submitted ? (
-        <div className="text-center py-6">
-          <div className="w-16 h-16 bg-emerald-50 text-emerald-600 rounded-2xl flex items-center justify-center mx-auto mb-4 border border-emerald-200">
+        <div className="text-center py-4">
+          <div className="w-16 h-16 bg-orange-50 text-[#f95a00] rounded-2xl flex items-center justify-center mx-auto mb-4 border border-orange-200">
             <CheckCircle2 className="w-8 h-8" />
           </div>
-          <h3 className="text-xl font-bold text-slate-900">Check your inbox</h3>
-          <p className="text-sm text-slate-500 mt-2 max-w-sm mx-auto">
+          <h2 className="text-2xl font-bold text-slate-900">Check your inbox</h2>
+          <p className="text-xs sm:text-sm text-slate-500 mt-2 max-w-sm mx-auto">
             We have dispatched password reset instructions to{' '}
             <span className="font-semibold text-slate-800">{submittedEmail}</span>.
           </p>
-          <div className="mt-8 space-y-3">
+          <div className="mt-6 space-y-3">
             <Link
               to="/login"
-              className="block w-full py-2.5 px-4 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-xl text-sm transition-all"
+              className="block w-full py-3 px-4 bg-[#f95a00] hover:bg-[#e05200] text-white font-bold rounded-xl text-xs transition-all shadow-md shadow-orange-500/20"
             >
               Return to Sign In
             </Link>
             <button
               type="button"
               onClick={() => setSubmitted(false)}
-              className="text-xs text-slate-500 hover:text-indigo-600 font-medium transition-colors"
+              className="text-xs text-slate-500 hover:text-[#f95a00] font-medium transition-colors"
             >
               Didn&apos;t receive email? Try again
             </button>
@@ -66,36 +58,31 @@ const ForgotPasswordPage = () => {
       ) : (
         <>
           <div className="mb-6">
-            <h2 className="text-2xl font-bold text-slate-900 tracking-tight">Forgot password?</h2>
+            <h1 className="text-3xl font-extrabold text-slate-900 tracking-tight">Forgot Password</h1>
             <p className="text-sm text-slate-500 mt-1">
-              Enter your registered email address and we will send you instructions to reset your password.
+              Enter your email and we will send you password reset instructions.
             </p>
           </div>
 
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
             <div>
-              <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1.5">
-                Email Address
+              <label className="block text-xs font-semibold text-slate-800 mb-1.5">
+                Email
               </label>
-              <div className="relative">
-                <Mail className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
-                <input
-                  type="email"
-                  placeholder="e.g. yourname@domain.com"
-                  {...register('email', {
-                    required: 'Email is required',
-                    pattern: {
-                      value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                      message: 'Invalid email address'
-                    }
-                  })}
-                  className={`w-full pl-10 pr-4 py-2.5 bg-slate-50 border rounded-xl text-sm text-slate-800 placeholder-slate-400 focus:bg-white focus:ring-2 transition-all outline-none ${
-                    errors.email
-                      ? 'border-rose-400 focus:border-rose-500 focus:ring-rose-100'
-                      : 'border-slate-200 focus:border-indigo-500 focus:ring-indigo-100'
-                  }`}
-                />
-              </div>
+              <input
+                type="email"
+                placeholder="example.educationpro@gmail.com"
+                {...register('email', {
+                  required: 'Email is required',
+                  pattern: {
+                    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                    message: 'Please enter a valid email address'
+                  }
+                })}
+                className={`w-full px-4 py-3 bg-white border rounded-xl text-sm text-slate-900 placeholder-slate-400 focus:border-[#f95a00] focus:ring-2 focus:ring-orange-100 transition-all outline-none ${
+                  errors.email ? 'border-rose-400' : 'border-slate-200'
+                }`}
+              />
               {errors.email && (
                 <p className="text-rose-500 text-xs mt-1 font-medium">{errors.email.message}</p>
               )}
@@ -104,18 +91,25 @@ const ForgotPasswordPage = () => {
             <button
               type="submit"
               disabled={loading}
-              className="w-full flex items-center justify-center gap-2 py-3 px-4 bg-indigo-600 hover:bg-indigo-700 active:scale-[0.99] text-white font-semibold rounded-xl shadow-md shadow-indigo-600/20 hover:shadow-indigo-600/30 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full py-3.5 px-4 bg-[#f95a00] hover:bg-[#e05200] active:scale-[0.99] text-white font-bold rounded-xl shadow-md shadow-orange-500/20 hover:shadow-orange-500/30 transition-all text-sm disabled:opacity-60 flex items-center justify-center gap-2"
             >
               {loading ? (
                 <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
               ) : (
-                <>
-                  <Send className="w-4 h-4" />
-                  <span>Send Reset Instructions</span>
-                </>
+                <span>Send Reset Instructions</span>
               )}
             </button>
           </form>
+
+          <div className="mt-6 text-center">
+            <Link
+              to="/login"
+              className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-600 hover:text-[#f95a00] transition-colors"
+            >
+              <ArrowLeft className="w-3.5 h-3.5" />
+              <span>Back to Login</span>
+            </Link>
+          </div>
         </>
       )}
     </div>

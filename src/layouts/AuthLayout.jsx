@@ -1,83 +1,84 @@
 import { Outlet } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import { GraduationCap, Sparkles, Award, Users, BookOpen } from 'lucide-react';
+import AuthHeroIllustration from '../components/auth/AuthHeroIllustration';
 
 const AuthLayout = () => {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 flex flex-col justify-center py-12 sm:px-6 lg:px-8 relative overflow-hidden">
-      {/* Background ambient blurs */}
-      <div className="absolute top-0 -left-40 w-96 h-96 bg-indigo-500/20 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute bottom-0 -right-40 w-96 h-96 bg-violet-500/20 rounded-full blur-3xl pointer-events-none" />
-
+    <div className="min-h-screen bg-white flex flex-col justify-between px-6 py-8 sm:px-10 lg:px-20 select-text">
+      {/* Toast notification container */}
       <ToastContainer
         position="top-right"
         autoClose={3500}
-        theme="colored"
+        hideProgressBar={false}
+        theme="light"
       />
 
-      <div className="max-w-4xl w-full mx-auto px-4 z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-12 bg-white rounded-3xl shadow-2xl overflow-hidden border border-slate-100/20">
-          {/* Brand Info Banner */}
-          <div className="hidden lg:flex lg:col-span-5 bg-gradient-to-br from-indigo-600 via-indigo-700 to-violet-800 p-10 flex-col justify-between text-white relative">
-            <div>
-              <div className="flex items-center gap-3">
-                <div className="w-11 h-11 rounded-2xl bg-white/10 backdrop-blur-md flex items-center justify-center text-white border border-white/20">
-                  <GraduationCap className="w-6 h-6" />
-                </div>
-                <div>
-                  <h1 className="text-xl font-bold tracking-tight">EduSphere</h1>
-                  <p className="text-xs text-indigo-200">Online Learning Management</p>
-                </div>
-              </div>
-
-              <div className="mt-12 space-y-6">
-                <div className="flex items-start gap-3">
-                  <div className="p-2 rounded-xl bg-white/10 border border-white/15">
-                    <BookOpen className="w-4 h-4 text-indigo-200" />
-                  </div>
-                  <div>
-                    <h4 className="font-semibold text-sm">Industry-Aligned Courses</h4>
-                    <p className="text-xs text-indigo-200 mt-0.5">Learn React 19, Python, Cloud & AI.</p>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-3">
-                  <div className="p-2 rounded-xl bg-white/10 border border-white/15">
-                    <Users className="w-4 h-4 text-indigo-200" />
-                  </div>
-                  <div>
-                    <h4 className="font-semibold text-sm">Top Global Instructors</h4>
-                    <p className="text-xs text-indigo-200 mt-0.5">Learn directly from verified educators.</p>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-3">
-                  <div className="p-2 rounded-xl bg-white/10 border border-white/15">
-                    <Award className="w-4 h-4 text-indigo-200" />
-                  </div>
-                  <div>
-                    <h4 className="font-semibold text-sm">Recognized Certificates</h4>
-                    <p className="text-xs text-indigo-200 mt-0.5">Boost your portfolio with verified credentials.</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="pt-8 border-t border-white/15">
-              <div className="flex items-center gap-2 text-xs text-indigo-100">
-                <Sparkles className="w-4 h-4 text-amber-300" />
-                <span>Join 25,000+ ambitious developers today</span>
-              </div>
-            </div>
+      {/* Main Content: 2-Column Responsive Layout */}
+      <div className="flex-1 w-full max-w-7xl mx-auto flex items-center justify-center py-6">
+        <div className="w-full grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-center">
+          
+          {/* Left Column: Authentic Illustration */}
+          <div className="hidden lg:flex lg:col-span-6 justify-center items-center">
+            <AuthHeroIllustration />
           </div>
 
-          {/* Dynamic Form Area */}
-          <div className="col-span-1 lg:col-span-7 p-6 sm:p-10 flex flex-col justify-center bg-white">
+          {/* Right Column: Form Container */}
+          <div className="col-span-1 lg:col-span-6 flex flex-col justify-center max-w-[420px] w-full mx-auto">
             <Outlet />
           </div>
+
         </div>
       </div>
+
+      {/* Page Footer Matching Mockup Exactly */}
+      <footer className="w-full max-w-7xl mx-auto pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-[13px] text-[#4b5563]">
+        <p>
+          &copy; 2022 All rights reserved{' '}
+          <span className="text-[#fa5507] font-semibold">Education Pro</span>
+        </p>
+
+        {/* Outline Social Icons (Facebook, YouTube, TikTok) */}
+        <div className="flex items-center gap-3">
+          {/* Facebook */}
+          <a
+            href="https://facebook.com"
+            target="_blank"
+            rel="noreferrer"
+            className="w-6 h-6 rounded-md border border-[#374151] text-[#374151] hover:text-[#fa5507] hover:border-[#fa5507] flex items-center justify-center transition-colors"
+            aria-label="Facebook"
+          >
+            <svg className="w-3 h-3 fill-current" viewBox="0 0 24 24">
+              <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+            </svg>
+          </a>
+
+          {/* YouTube / Play */}
+          <a
+            href="https://youtube.com"
+            target="_blank"
+            rel="noreferrer"
+            className="w-6 h-6 rounded-md border border-[#374151] text-[#374151] hover:text-[#fa5507] hover:border-[#fa5507] flex items-center justify-center transition-colors"
+            aria-label="YouTube"
+          >
+            <svg className="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
+              <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
+            </svg>
+          </a>
+
+          {/* TikTok */}
+          <a
+            href="https://tiktok.com"
+            target="_blank"
+            rel="noreferrer"
+            className="w-6 h-6 rounded-md border border-[#374151] text-[#374151] hover:text-[#fa5507] hover:border-[#fa5507] flex items-center justify-center transition-colors"
+            aria-label="TikTok"
+          >
+            <svg className="w-3 h-3 fill-current" viewBox="0 0 24 24">
+              <path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.97v7.69c0 2.21-.77 4.39-2.22 6.03-1.45 1.63-3.52 2.67-5.71 2.82-2.2.15-4.42-.51-6.14-1.91-1.72-1.4-2.82-3.41-3.04-5.61-.22-2.21.46-4.44 1.89-6.13 1.43-1.69 3.49-2.73 5.7-2.87.52-.03 1.05 0 1.57.08v4.14c-.66-.19-1.38-.2-2.04-.04-.67.16-1.28.53-1.72 1.05-.44.52-.69 1.19-.68 1.88.01.69.28 1.35.74 1.85.46.51 1.08.85 1.76.97.68.12 1.39.02 2.01-.27.62-.29 1.12-.79 1.42-1.41.29-.62.43-1.31.42-2.01V.02z" />
+            </svg>
+          </a>
+        </div>
+      </footer>
     </div>
   );
 };

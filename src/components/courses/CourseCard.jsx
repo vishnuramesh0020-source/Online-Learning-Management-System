@@ -8,7 +8,8 @@ import {
   CheckCircle2,
   ExternalLink
 } from 'lucide-react';
-import { useCourses } from '../../context/CourseContext';
+import { useCourses } from '../../context/useCourses';
+import { useAuth } from '../../context/useAuth';
 import { toast } from 'react-toastify';
 
 const levelBadgeColor = {
@@ -19,6 +20,7 @@ const levelBadgeColor = {
 
 const CourseCard = ({ course, onEdit, onDelete }) => {
   const { enrolledCourseIds, toggleEnrollment } = useCourses();
+  const { canManageCourses } = useAuth();
   const isEnrolled = enrolledCourseIds.some((id) => String(id) === String(course.id));
 
   const handleEnrollClick = (e) => {
@@ -60,13 +62,18 @@ const CourseCard = ({ course, onEdit, onDelete }) => {
           </span>
         </div>
 
-        {/* Level badge bottom left */}
-        <div className="absolute bottom-3 left-3">
+        {/* Level & API badge bottom left */}
+        <div className="absolute bottom-3 left-3 flex items-center gap-1.5">
           <span
             className={`text-[10px] font-semibold border px-2 py-0.5 rounded-md backdrop-blur-xs bg-white/90 ${levelColor}`}
           >
             {course.level}
           </span>
+          {course.isApi && (
+            <span className="text-[10px] font-bold px-2 py-0.5 rounded-md backdrop-blur-xs bg-indigo-600/90 text-white shadow-xs">
+              API
+            </span>
+          )}
         </div>
       </div>
 
@@ -121,7 +128,7 @@ const CourseCard = ({ course, onEdit, onDelete }) => {
 
           {/* Action Buttons (Edit, Delete, Details) */}
           <div className="flex items-center gap-1.5">
-            {onEdit && (
+            {canManageCourses && onEdit && (
               <button
                 type="button"
                 onClick={(e) => {
@@ -134,7 +141,7 @@ const CourseCard = ({ course, onEdit, onDelete }) => {
                 <Edit2 className="w-3.5 h-3.5" />
               </button>
             )}
-            {onDelete && (
+            {canManageCourses && onDelete && (
               <button
                 type="button"
                 onClick={(e) => {
