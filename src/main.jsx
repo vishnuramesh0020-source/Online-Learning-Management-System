@@ -7,6 +7,7 @@ import { AuthProvider } from './context/AuthContext.jsx'
 import { CourseProvider } from './context/CourseContext.jsx'
 import { StudentProvider } from './context/StudentContext.jsx'
 import { InstructorProvider } from './context/InstructorContext.jsx'
+import { AssessmentProvider } from './context/AssessmentContext.jsx'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
@@ -14,7 +15,9 @@ createRoot(document.getElementById('root')).render(
       <CourseProvider>
         <StudentProvider>
           <InstructorProvider>
-            <App />
+            <AssessmentProvider>
+              <App />
+            </AssessmentProvider>
           </InstructorProvider>
         </StudentProvider>
       </CourseProvider>

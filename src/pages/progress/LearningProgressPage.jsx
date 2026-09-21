@@ -1,5 +1,6 @@
 import { useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
+import { useAuth } from '../../context/useAuth';
 import { useCourses } from '../../context/useCourses';
 import { useStudents } from '../../context/useStudents';
 import Pagination from '../../components/common/Pagination';
@@ -24,6 +25,7 @@ import {
 } from 'lucide-react';
 
 const LearningProgressPage = () => {
+  const { user, canManageCourses } = useAuth();
   const {
     enrollments,
     courses,
@@ -57,10 +59,16 @@ const LearningProgressPage = () => {
   // Derived effective student ID
   const effectiveStudentId = useMemo(() => {
     if (selectedStudentId) return selectedStudentId;
+    // For student role, prefer matching the logged in student
+    if (!canManageCourses && user) {
+      const match = students.find((s) => s.email?.toLowerCase() === user.email?.toLowerCase())
+        || enrollments.find((e) => e.studentEmail?.toLowerCase() === user.email?.toLowerCase() || String(e.studentId) === String(user.id));
+      if (match) return String(match.id || match.studentId);
+    }
     if (enrollments.length > 0) return String(enrollments[0].studentId);
     if (students.length > 0) return String(students[0].id);
     return '';
-  }, [selectedStudentId, enrollments, students]);
+  }, [selectedStudentId, enrollments, students, canManageCourses, user]);
 
   // Unique list of students who have enrollments
   const enrolledStudentsList = useMemo(() => {
@@ -301,33 +309,35 @@ const LearningProgressPage = () => {
           </p>
         </div>
 
-        {/* View Switcher Tabs */}
-        <div className="flex items-center p-1 bg-slate-100 border border-slate-200 rounded-xl self-start sm:self-auto">
-          <button
-            type="button"
-            onClick={() => setActiveTab('student')}
-            className={`flex items-center gap-2 px-4 py-2 rounded-lg text-xs sm:text-sm font-semibold transition-all cursor-pointer ${
-              activeTab === 'student'
-                ? 'bg-white text-indigo-700 shadow-xs'
-                : 'text-slate-600 hover:text-slate-900'
-            }`}
-          >
-            <User className="w-4 h-4" />
-            <span>Student-wise Progress</span>
-          </button>
-          <button
-            type="button"
-            onClick={() => setActiveTab('roster')}
-            className={`flex items-center gap-2 px-4 py-2 rounded-lg text-xs sm:text-sm font-semibold transition-all cursor-pointer ${
-              activeTab === 'roster'
-                ? 'bg-white text-indigo-700 shadow-xs'
-                : 'text-slate-600 hover:text-slate-900'
-            }`}
-          >
-            <BarChart3 className="w-4 h-4" />
-            <span>All Learners Overview</span>
-          </button>
-        </div>
+        {/* View Switcher Tabs (Instructors only) */}
+        {canManageCourses && (
+          <div className="flex items-center p-1 bg-slate-100 border border-slate-200 rounded-xl self-start sm:self-auto">
+            <button
+              type="button"
+              onClick={() => setActiveTab('student')}
+              className={`flex items-center gap-2 px-4 py-2 rounded-lg text-xs sm:text-sm font-semibold transition-all cursor-pointer ${
+                activeTab === 'student'
+                  ? 'bg-white text-indigo-700 shadow-xs'
+                  : 'text-slate-600 hover:text-slate-900'
+              }`}
+            >
+              <User className="w-4 h-4" />
+              <span>Student-wise Progress</span>
+            </button>
+            <button
+              type="button"
+              onClick={() => setActiveTab('roster')}
+              className={`flex items-center gap-2 px-4 py-2 rounded-lg text-xs sm:text-sm font-semibold transition-all cursor-pointer ${
+                activeTab === 'roster'
+                  ? 'bg-white text-indigo-700 shadow-xs'
+                  : 'text-slate-600 hover:text-slate-900'
+              }`}
+            >
+              <BarChart3 className="w-4 h-4" />
+              <span>All Learners Overview</span>
+            </button>
+          </div>
+        )}
       </div>
 
       {/* Global Statistics KPI Cards */}
@@ -460,87 +470,89 @@ const LearningProgressPage = () => {
       {/* ========================================================================= */}
       {activeTab === 'student' && (
         <div className="space-y-8">
-          {/* Student Selector Card */}
-          <div className="bg-white rounded-2xl p-6 border border-slate-200/80 shadow-xs">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-5">
-              <div>
-                <h2 className="text-lg font-bold text-slate-900 flex items-center gap-2">
-                  <User className="w-5 h-5 text-indigo-600" />
-                  <span>Select Student to Track</span>
-                </h2>
-                <p className="text-xs text-slate-500 mt-0.5">
-                  Choose a student to view course completion percentage, inspect lesson checklists, and update progress.
-                </p>
-              </div>
-
-              {/* Student Quick Search */}
-              <div className="relative w-full sm:w-72">
-                <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
-                <input
-                  type="text"
-                  placeholder="Filter student list..."
-                  value={studentSearchQuery}
-                  onChange={(e) => setStudentSearchQuery(e.target.value)}
-                  className="w-full pl-9 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs sm:text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all"
-                />
-              </div>
-            </div>
-
-            {/* Horizontally scrollable / grid student pill roster */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 max-h-60 overflow-y-auto pr-1">
-              {filteredStudents.length > 0 ? (
-                filteredStudents.map((stu) => {
-                  const isSelected = String(stu.id) === String(effectiveStudentId);
-                  return (
-                    <button
-                      key={stu.id}
-                      type="button"
-                      onClick={() => setSelectedStudentId(String(stu.id))}
-                      className={`flex items-center gap-3 p-3 rounded-xl border text-left transition-all cursor-pointer ${
-                        isSelected
-                          ? 'bg-indigo-50/70 border-indigo-400/80 shadow-xs ring-2 ring-indigo-500/20'
-                          : 'bg-white border-slate-200 hover:border-slate-300 hover:bg-slate-50/60'
-                      }`}
-                    >
-                      <img
-                        src={stu.avatar}
-                        alt={stu.name}
-                        className="w-10 h-10 rounded-full object-cover border border-slate-200 shrink-0"
-                        onError={(e) => {
-                          e.target.onerror = null;
-                          e.target.src = `https://api.dicebear.com/7.x/avataaars/svg?seed=${encodeURIComponent(stu.name)}`;
-                        }}
-                      />
-                      <div className="min-w-0 flex-1">
-                        <p className={`text-xs font-semibold truncate ${isSelected ? 'text-indigo-900' : 'text-slate-800'}`}>
-                          {stu.name}
-                        </p>
-                        <p className="text-[11px] text-slate-400 truncate">{stu.email}</p>
-                        <div className="flex items-center gap-2 mt-1">
-                          <span
-                            className={`inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-medium ${
-                              stu.enrollmentCount > 0
-                                ? 'bg-indigo-100/70 text-indigo-700'
-                                : 'bg-slate-100 text-slate-500'
-                            }`}
-                          >
-                            {stu.enrollmentCount} {stu.enrollmentCount === 1 ? 'course' : 'courses'}
-                          </span>
-                        </div>
-                      </div>
-                      {isSelected && (
-                        <div className="w-2 h-2 rounded-full bg-indigo-600 shrink-0" />
-                      )}
-                    </button>
-                  );
-                })
-              ) : (
-                <div className="col-span-full py-6 text-center text-xs text-slate-400">
-                  No students found matching "{studentSearchQuery}".
+          {/* Student Selector Card (Instructors only) */}
+          {canManageCourses && (
+            <div className="bg-white rounded-2xl p-6 border border-slate-200/80 shadow-xs">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-5">
+                <div>
+                  <h2 className="text-lg font-bold text-slate-900 flex items-center gap-2">
+                    <User className="w-5 h-5 text-indigo-600" />
+                    <span>Select Student to Track</span>
+                  </h2>
+                  <p className="text-xs text-slate-500 mt-0.5">
+                    Choose a student to view course completion percentage, inspect lesson checklists, and update progress.
+                  </p>
                 </div>
-              )}
+
+                {/* Student Quick Search */}
+                <div className="relative w-full sm:w-72">
+                  <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
+                  <input
+                    type="text"
+                    placeholder="Filter student list..."
+                    value={studentSearchQuery}
+                    onChange={(e) => setStudentSearchQuery(e.target.value)}
+                    className="w-full pl-9 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs sm:text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all"
+                  />
+                </div>
+              </div>
+
+              {/* Horizontally scrollable / grid student pill roster */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 max-h-60 overflow-y-auto pr-1">
+                {filteredStudents.length > 0 ? (
+                  filteredStudents.map((stu) => {
+                    const isSelected = String(stu.id) === String(effectiveStudentId);
+                    return (
+                      <button
+                        key={stu.id}
+                        type="button"
+                        onClick={() => setSelectedStudentId(String(stu.id))}
+                        className={`flex items-center gap-3 p-3 rounded-xl border text-left transition-all cursor-pointer ${
+                          isSelected
+                            ? 'bg-indigo-50/70 border-indigo-400/80 shadow-xs ring-2 ring-indigo-500/20'
+                            : 'bg-white border-slate-200 hover:border-slate-300 hover:bg-slate-50/60'
+                        }`}
+                      >
+                        <img
+                          src={stu.avatar}
+                          alt={stu.name}
+                          className="w-10 h-10 rounded-full object-cover border border-slate-200 shrink-0"
+                          onError={(e) => {
+                            e.target.onerror = null;
+                            e.target.src = `https://api.dicebear.com/7.x/avataaars/svg?seed=${encodeURIComponent(stu.name)}`;
+                          }}
+                        />
+                        <div className="min-w-0 flex-1">
+                          <p className={`text-xs font-semibold truncate ${isSelected ? 'text-indigo-900' : 'text-slate-800'}`}>
+                            {stu.name}
+                          </p>
+                          <p className="text-[11px] text-slate-400 truncate">{stu.email}</p>
+                          <div className="flex items-center gap-2 mt-1">
+                            <span
+                              className={`inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-medium ${
+                                stu.enrollmentCount > 0
+                                  ? 'bg-indigo-100/70 text-indigo-700'
+                                  : 'bg-slate-100 text-slate-500'
+                              }`}
+                            >
+                              {stu.enrollmentCount} {stu.enrollmentCount === 1 ? 'course' : 'courses'}
+                            </span>
+                          </div>
+                        </div>
+                        {isSelected && (
+                          <div className="w-2 h-2 rounded-full bg-indigo-600 shrink-0" />
+                        )}
+                      </button>
+                    );
+                  })
+                ) : (
+                  <div className="col-span-full py-6 text-center text-xs text-slate-400">
+                    No students found matching "{studentSearchQuery}".
+                  </div>
+                )}
+              </div>
             </div>
-          </div>
+          )}
 
           {/* Selected Student Active Profile & Overall Progress Header */}
           {currentStudent && (
@@ -699,24 +711,28 @@ const LearningProgressPage = () => {
 
                         {/* Quick Action Buttons */}
                         <div className="flex items-center gap-2 shrink-0 self-end lg:self-center">
-                          <button
-                            type="button"
-                            onClick={() => markAllLessonsCompleted(enrollment.id)}
-                            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-emerald-200 bg-emerald-50/70 text-emerald-700 text-xs font-semibold hover:bg-emerald-100 transition-colors cursor-pointer"
-                            title="Mark all lessons as completed"
-                          >
-                            <CheckCheck className="w-3.5 h-3.5" />
-                            <span>Mark 100%</span>
-                          </button>
-                          <button
-                            type="button"
-                            onClick={() => resetEnrollmentProgress(enrollment.id)}
-                            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-slate-200 bg-slate-50 text-slate-600 text-xs font-semibold hover:bg-slate-100 transition-colors cursor-pointer"
-                            title="Reset all lessons to 0%"
-                          >
-                            <RefreshCw className="w-3.5 h-3.5" />
-                            <span>Reset</span>
-                          </button>
+                          {canManageCourses && (
+                            <>
+                              <button
+                                type="button"
+                                onClick={() => markAllLessonsCompleted(enrollment.id)}
+                                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-emerald-200 bg-emerald-50/70 text-emerald-700 text-xs font-semibold hover:bg-emerald-100 transition-colors cursor-pointer"
+                                title="Mark all lessons as completed"
+                              >
+                                <CheckCheck className="w-3.5 h-3.5" />
+                                <span>Mark 100%</span>
+                              </button>
+                              <button
+                                type="button"
+                                onClick={() => resetEnrollmentProgress(enrollment.id)}
+                                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-slate-200 bg-slate-50 text-slate-600 text-xs font-semibold hover:bg-slate-100 transition-colors cursor-pointer"
+                                title="Reset all lessons to 0%"
+                              >
+                                <RefreshCw className="w-3.5 h-3.5" />
+                                <span>Reset</span>
+                              </button>
+                            </>
+                          )}
                           <Link
                             to={`/courses/${enrollment.courseId}`}
                             className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-slate-200 bg-white text-slate-700 text-xs font-semibold hover:bg-slate-50 transition-colors"

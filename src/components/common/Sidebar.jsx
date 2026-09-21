@@ -5,19 +5,21 @@ import {
   BookOpen,
   PlusCircle,
   X,
-  Sparkles,
   Layers,
   Users,
   ClipboardCheck,
   TrendingUp,
-  Award
+  CheckSquare,
+  BarChart3,
+  Award,
+  User
 } from 'lucide-react';
 import { useAuth } from '../../context/useAuth';
 
 const Sidebar = ({ isOpen, onClose, onOpenAddCourse }) => {
-  const { user, canManageCourses } = useAuth();
+  const { isStudent, canManageCourses } = useAuth();
 
-  const navLinks = [
+  const allNavLinks = [
     {
       to: '/dashboard',
       label: 'Dashboard',
@@ -36,7 +38,8 @@ const Sidebar = ({ isOpen, onClose, onOpenAddCourse }) => {
     {
       to: '/students',
       label: 'Students',
-      icon: Users
+      icon: Users,
+      instructorOnly: true
     },
     {
       to: '/enrollments',
@@ -49,11 +52,34 @@ const Sidebar = ({ isOpen, onClose, onOpenAddCourse }) => {
       icon: TrendingUp
     },
     {
+      to: '/assignments',
+      label: 'Assignments & Quizzes',
+      icon: CheckSquare
+    },
+    {
+      to: '/reports',
+      label: 'Reports & Analytics',
+      icon: BarChart3,
+      instructorOnly: true
+    },
+    {
       to: '/instructors',
       label: 'Instructors',
       icon: Award
+    },
+    {
+      to: '/profile',
+      label: 'My Profile',
+      icon: User
     }
   ];
+
+  const navLinks = allNavLinks.filter((link) => {
+    if (isStudent && link.instructorOnly) {
+      return false;
+    }
+    return true;
+  });
 
   return (
     <>
@@ -140,36 +166,6 @@ const Sidebar = ({ isOpen, onClose, onOpenAddCourse }) => {
               </button>
             </div>
           )}
-        </div>
-
-        {/* Bottom Card / User Profile Info */}
-        <div className="p-4 border-t border-slate-100">
-          <div className="bg-gradient-to-br from-indigo-50 to-violet-50 rounded-2xl p-3.5 border border-indigo-100/70">
-            <div className="flex items-center gap-2 mb-1.5">
-              <Sparkles className="w-4 h-4 text-indigo-600" />
-              <span className="text-xs font-bold text-indigo-900">
-                {user?.role === 'Instructor'
-                  ? 'Instructor Portal'
-                  : 'Student Learner'}
-              </span>
-            </div>
-            <p className="text-[11px] text-slate-600 leading-relaxed mb-3">
-              {user?.role === 'Instructor'
-                ? 'Author courses, build curriculum and track enrolled learners.'
-                : 'Full access to courses, interactive labs & certificates.'}
-            </p>
-            <div className="flex items-center gap-2 pt-2 border-t border-indigo-100">
-              <img
-                src={user?.avatar || 'https://api.dicebear.com/7.x/avataaars/svg?seed=User'}
-                alt=""
-                className="w-7 h-7 rounded-lg object-cover"
-              />
-              <div className="truncate">
-                <p className="text-xs font-semibold text-slate-800 truncate">{user?.name}</p>
-                <p className="text-[10px] text-indigo-600 font-medium capitalize">{user?.role}</p>
-              </div>
-            </div>
-          </div>
         </div>
       </aside>
     </>

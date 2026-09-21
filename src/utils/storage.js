@@ -8,6 +8,8 @@ export const STORAGE_KEYS = {
   STUDENTS: 'lms_students_v1',
   INSTRUCTORS: 'lms_instructors_v1',
   ENROLLMENTS: 'lms_enrollments_v1',
+  ASSIGNMENTS: 'lms_assignments_v1',
+  QUIZZES: 'lms_quizzes_v1',
 };
 
 export const getStorageItem = (key, fallback = null) => {

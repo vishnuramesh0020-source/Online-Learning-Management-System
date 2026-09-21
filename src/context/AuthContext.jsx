@@ -129,6 +129,65 @@ export const AuthProvider = ({ children }) => {
     return updatedUser;
   };
 
+  // Update Profile handler
+  const updateProfile = async (profileData) => {
+    setLoading(true);
+    try {
+      await new Promise((resolve) => setTimeout(resolve, 300));
+      const updatedUser = {
+        ...user,
+        ...profileData
+      };
+      setUser(updatedUser);
+      setStorageItem(STORAGE_KEYS.AUTH_USER, updatedUser);
+
+      // Also update in users list
+      setUsers((prev) => {
+        const next = prev.map((u) => {
+          if (String(u.id) === String(user?.id) || u.email?.toLowerCase() === user?.email?.toLowerCase()) {
+            return { ...u, ...profileData };
+          }
+          return u;
+        });
+        setStorageItem(STORAGE_KEYS.USERS, next);
+        return next;
+      });
+
+      return updatedUser;
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Change Password handler
+  const changePassword = async (currentPassword, newPassword) => {
+    setLoading(true);
+    try {
+      await new Promise((resolve) => setTimeout(resolve, 300));
+      const matched = users.find(
+        (u) => String(u.id) === String(user?.id) || u.email?.toLowerCase() === user?.email?.toLowerCase()
+      );
+      if (matched && matched.password && matched.password !== currentPassword) {
+        throw new Error('Current password does not match.');
+      }
+
+      setUsers((prev) => {
+        const next = prev.map((u) => {
+          if (String(u.id) === String(user?.id) || u.email?.toLowerCase() === user?.email?.toLowerCase()) {
+            return { ...u, password: newPassword };
+          }
+          return u;
+        });
+        setStorageItem(STORAGE_KEYS.USERS, next);
+        return next;
+      });
+
+      return true;
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const isStudent = user?.role === 'Student';
   const isInstructor = user?.role === 'Instructor';
   const canManageCourses = isInstructor;
@@ -145,6 +204,8 @@ export const AuthProvider = ({ children }) => {
         isInstructor,
         canManageCourses,
         switchRole,
+        updateProfile,
+        changePassword,
         login,
         register,
         forgotPassword,

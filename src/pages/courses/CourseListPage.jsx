@@ -76,10 +76,6 @@ const CourseListPage = () => {
               <BookOpen className="w-3.5 h-3.5" />
               <span>Course Catalog</span>
             </div>
-            <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-50 border border-emerald-100 text-emerald-700 text-[11px] font-semibold">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-              <span>DummyJSON API Live</span>
-            </div>
           </div>
           <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight">
             Course Management

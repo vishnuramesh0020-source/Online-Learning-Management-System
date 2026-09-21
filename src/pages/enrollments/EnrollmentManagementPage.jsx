@@ -1,4 +1,5 @@
 import { useState, useMemo } from 'react';
+import { useAuth } from '../../context/useAuth';
 import { useCourses } from '../../context/useCourses';
 import EnrollModal from '../../components/enrollments/EnrollModal';
 import Modal from '../../components/common/Modal';
@@ -16,6 +17,7 @@ import {
 } from 'lucide-react';
 
 const EnrollmentManagementPage = () => {
+  const { canManageCourses } = useAuth();
   const {
     enrollments,
     courses,
@@ -106,14 +108,16 @@ const EnrollmentManagementPage = () => {
           </p>
         </div>
 
-        <button
-          type="button"
-          onClick={() => setIsEnrollModalOpen(true)}
-          className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs sm:text-sm font-semibold shadow-md shadow-indigo-600/20 transition-all hover:scale-[1.02] active:scale-[0.98] self-start sm:self-auto cursor-pointer"
-        >
-          <Plus className="w-4 h-4" />
-          <span>Enroll Student</span>
-        </button>
+        {canManageCourses && (
+          <button
+            type="button"
+            onClick={() => setIsEnrollModalOpen(true)}
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs sm:text-sm font-semibold shadow-md shadow-indigo-600/20 transition-all hover:scale-[1.02] active:scale-[0.98] self-start sm:self-auto cursor-pointer"
+          >
+            <Plus className="w-4 h-4" />
+            <span>Enroll Student</span>
+          </button>
+        )}
       </div>
 
       {/* Enrollment Summary Cards */}
@@ -281,13 +285,15 @@ const EnrollmentManagementPage = () => {
                 ? 'No enrollment matches your active filters. Try clearing your search or date filter.'
                 : 'No course enrollments have been recorded yet.'}
             </p>
-            <button
-              type="button"
-              onClick={() => setIsEnrollModalOpen(true)}
-              className="mt-4 px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-xs font-semibold shadow-xs transition-colors"
-            >
-              Enroll Student Now
-            </button>
+            {canManageCourses && (
+              <button
+                type="button"
+                onClick={() => setIsEnrollModalOpen(true)}
+                className="mt-4 px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-xs font-semibold shadow-xs transition-colors"
+              >
+                Enroll Student Now
+              </button>
+            )}
           </div>
         ) : (
           <div className="overflow-x-auto">
@@ -299,7 +305,7 @@ const EnrollmentManagementPage = () => {
                   <th className="py-3.5 px-4">Instructor</th>
                   <th className="py-3.5 px-4">Enrollment Date</th>
                   <th className="py-3.5 px-4">Status & Progress</th>
-                  <th className="py-3.5 pr-6 text-center">Action</th>
+                  {canManageCourses && <th className="py-3.5 pr-6 text-center">Action</th>}
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-100 text-xs">
@@ -369,16 +375,19 @@ const EnrollmentManagementPage = () => {
                     </td>
 
                     {/* Remove Enrollment Action */}
-                    <td className="py-4 pr-6 text-center whitespace-nowrap">
-                      <button
-                        type="button"
-                        onClick={() => setEnrollmentToRemove(enr)}
-                        title="Remove Enrollment"
-                        className="p-1.5 rounded-lg text-slate-400 hover:text-rose-600 hover:bg-rose-50 transition-colors cursor-pointer"
-                      >
-                        <Trash2 className="w-4 h-4" />
-                      </button>
-                    </td>
+                    {canManageCourses && (
+                      <td className="py-4 pr-6 text-center whitespace-nowrap">
+                        <button
+                          type="button"
+                          onClick={() => setEnrollmentToRemove(enr)}
+                          title="Remove Enrollment"
+                          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-slate-200 text-slate-600 hover:text-rose-600 hover:border-rose-300 hover:bg-rose-50/70 text-xs font-semibold transition-all cursor-pointer shadow-2xs"
+                        >
+                          <Trash2 className="w-3.5 h-3.5 text-rose-500" />
+                          <span>Unenroll</span>
+                        </button>
+                      </td>
+                    )}
                   </tr>
                 ))}
               </tbody>

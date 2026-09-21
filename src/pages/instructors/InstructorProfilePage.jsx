@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
+import { useAuth } from '../../context/useAuth';
 import { useInstructors } from '../../context/useInstructors';
 import { useCourses } from '../../context/useCourses';
 import InstructorFormModal from '../../components/instructors/InstructorFormModal';
@@ -18,6 +19,7 @@ import {
 
 const InstructorProfilePage = () => {
   const { id } = useParams();
+  const { canManageCourses } = useAuth();
   const { getInstructorById, updateInstructor } = useInstructors();
   const { courses } = useCourses();
 
@@ -74,24 +76,26 @@ const InstructorProfilePage = () => {
           <span>Back to Instructors</span>
         </Link>
 
-        <div className="flex items-center gap-2">
-          <button
-            type="button"
-            onClick={() => setIsAssignModalOpen(true)}
-            className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl border border-slate-200 text-slate-700 hover:bg-slate-50 text-xs font-semibold transition-colors cursor-pointer"
-          >
-            <BookOpen className="w-4 h-4 text-indigo-600" />
-            <span>Assign Courses</span>
-          </button>
-          <button
-            type="button"
-            onClick={() => setIsEditModalOpen(true)}
-            className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold shadow-xs transition-colors cursor-pointer"
-          >
-            <Edit2 className="w-4 h-4" />
-            <span>Edit Profile</span>
-          </button>
-        </div>
+        {canManageCourses && (
+          <div className="flex items-center gap-2">
+            <button
+              type="button"
+              onClick={() => setIsAssignModalOpen(true)}
+              className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl border border-slate-200 text-slate-700 hover:bg-slate-50 text-xs font-semibold transition-colors cursor-pointer"
+            >
+              <BookOpen className="w-4 h-4 text-indigo-600" />
+              <span>Assign Courses</span>
+            </button>
+            <button
+              type="button"
+              onClick={() => setIsEditModalOpen(true)}
+              className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold shadow-xs transition-colors cursor-pointer"
+            >
+              <Edit2 className="w-4 h-4" />
+              <span>Edit Profile</span>
+            </button>
+          </div>
+        )}
       </div>
 
       {/* Hero Profile Banner */}
@@ -167,14 +171,16 @@ const InstructorProfilePage = () => {
             </p>
           </div>
 
-          <button
-            type="button"
-            onClick={() => setIsAssignModalOpen(true)}
-            className="inline-flex items-center gap-1.5 text-xs font-bold text-indigo-600 hover:text-indigo-700 bg-indigo-50 px-3 py-2 rounded-xl transition-colors cursor-pointer"
-          >
-            <BookOpen className="w-3.5 h-3.5" />
-            <span>Manage Assigned Courses</span>
-          </button>
+          {canManageCourses && (
+            <button
+              type="button"
+              onClick={() => setIsAssignModalOpen(true)}
+              className="inline-flex items-center gap-1.5 text-xs font-bold text-indigo-600 hover:text-indigo-700 bg-indigo-50 px-3 py-2 rounded-xl transition-colors cursor-pointer"
+            >
+              <BookOpen className="w-3.5 h-3.5" />
+              <span>Manage Assigned Courses</span>
+            </button>
+          )}
         </div>
 
         {assignedCourses.length === 0 ? (
@@ -184,13 +190,15 @@ const InstructorProfilePage = () => {
             <p className="text-xs text-slate-400 mt-1 mb-4">
               This instructor currently does not have any courses assigned in the curriculum.
             </p>
-            <button
-              type="button"
-              onClick={() => setIsAssignModalOpen(true)}
-              className="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-xs font-semibold shadow-xs transition-colors"
-            >
-              Assign First Course
-            </button>
+            {canManageCourses && (
+              <button
+                type="button"
+                onClick={() => setIsAssignModalOpen(true)}
+                className="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-xs font-semibold shadow-xs transition-colors"
+              >
+                Assign First Course
+              </button>
+            )}
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

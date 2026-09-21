@@ -520,3 +520,473 @@ export const DEFAULT_COURSE_MODULES = [
   "Module 4: Testing, Performance Optimization & Security",
   "Module 5: Real-World Capstone Project & Production Deployment"
 ];
+
+export const INITIAL_ASSIGNMENTS = [
+  {
+    id: "asg_1",
+    title: "Server Actions & Streaming Hydration in Next.js 15",
+    courseId: 1,
+    courseTitle: "Mastering React 19 & Next.js 15 Full-Stack",
+    instructor: "Dr. Sarah Jenkins",
+    description: "Build an end-to-end full-stack dashboard utilizing React 19 Server Actions for form mutation, optimistic UI updates, and Next.js 15 App Router parallel streaming slots.",
+    requirements: [
+      "Implement server mutation using 'use server' actions with proper Zod schema validation",
+      "Incorporate useOptimistic hook for instant feedback on todo checklist changes",
+      "Deploy fallback Suspense boundaries for slow data retrieval slots",
+      "Submit public GitHub repository link and deployed preview URL"
+    ],
+    dueDate: "2026-09-19",
+    totalMarks: 100,
+    weightage: 20,
+    status: "Pending",
+    submissionText: "",
+    submissionLink: "",
+    submittedAt: null,
+    marksAwarded: null,
+    grade: null,
+    feedback: null
+  },
+  {
+    id: "asg_2",
+    title: "Exploratory Data Analysis & Predictive Pipeline with Pandas & Scikit-Learn",
+    courseId: 2,
+    courseTitle: "Complete Python for Data Science and Machine Learning",
+    instructor: "Prof. Michael Chen",
+    description: "Perform comprehensive EDA on real-world housing market datasets, clean missing data with imputers, engineer categorical features, and train an ensemble Random Forest model.",
+    requirements: [
+      "Jupyter Notebook with documented data distributions and correlation heatmaps",
+      "Handling outliers and multi-collinearity using VIF metrics",
+      "Model evaluation using RMSE, MAE, and R-squared metrics on unseen test split",
+      "Provide clean GitHub repository and requirements.txt"
+    ],
+    dueDate: "2026-09-24",
+    totalMarks: 100,
+    weightage: 15,
+    status: "Submitted",
+    submissionText: "Completed EDA and built Random Forest pipeline with 91.4% R-squared accuracy.",
+    submissionLink: "https://github.com/alex-morgan/python-eda-predictive-pipeline",
+    submittedAt: "2026-09-16T14:20:00Z",
+    marksAwarded: null,
+    grade: null,
+    feedback: "Submission received. Currently in queue for instructor peer evaluation."
+  },
+  {
+    id: "asg_3",
+    title: "Design System & Interactive Mobile Banking Prototype in Figma",
+    courseId: 3,
+    courseTitle: "Modern UI/UX Design with Figma: Concept to Prototype",
+    instructor: "Elena Rostova",
+    description: "Construct an accessible design system with typography scale, color tokens, responsive auto-layout components with variants, and an interactive micro-interaction prototype.",
+    requirements: [
+      "Figma design file with documented color contrast WCAG AAA compliance",
+      "Atomic component library: buttons, input fields, navigation sheets, cards",
+      "Interactive prototype demonstrating money transfer and biometric authentication flow",
+      "Submit shareable Figma preview link with view permissions"
+    ],
+    dueDate: "2026-09-10",
+    totalMarks: 100,
+    weightage: 25,
+    status: "Graded",
+    submissionText: "Figma design tokens, auto-layout library, and high-fidelity prototype completed with full dark mode support.",
+    submissionLink: "https://figma.com/@alex-morgan/educationpro-banking-system",
+    submittedAt: "2026-09-09T18:45:00Z",
+    marksAwarded: 94,
+    grade: "A",
+    feedback: "Exceptional design tokens hierarchy! Auto-layout constraints are rock-solid and the money transfer transition feels intuitive."
+  },
+  {
+    id: "asg_4",
+    title: "Containerized Microservices Cluster with Docker & Kubernetes Helm",
+    courseId: 4,
+    courseTitle: "Cloud Computing & DevOps with AWS, Docker & Kubernetes",
+    instructor: "David Miller",
+    description: "Containerize a Node.js API and Redis caching layer with Docker multi-stage builds. Package deployments into Kubernetes Helm charts with Ingress routing and TLS cert-manager.",
+    requirements: [
+      "Production-ready multi-stage Dockerfiles under 80MB image size",
+      "Kubernetes Helm charts with configurable values.yaml for staging and production",
+      "Horizontal Pod Autoscaler (HPA) configured for CPU utilization above 75%",
+      "Documentation of kubectl rollout and ingress testing verification"
+    ],
+    dueDate: "2026-09-17",
+    totalMarks: 100,
+    weightage: 20,
+    status: "Pending",
+    submissionText: "",
+    submissionLink: "",
+    submittedAt: null,
+    marksAwarded: null,
+    grade: null,
+    feedback: null
+  },
+  {
+    id: "asg_5",
+    title: "Cross-Platform Mobile Cart & State Management with Riverpod",
+    courseId: 5,
+    courseTitle: "Cross-Platform Mobile App Development with Flutter & Dart",
+    instructor: "Sophia Rodriguez",
+    description: "Develop a high-performance cross-platform e-commerce cart utilizing Flutter and Riverpod state management. Integrate Firebase Cloud Firestore for real-time order synchronizations.",
+    requirements: [
+      "Clean separation of UI, domain providers, and repository data sources",
+      "Optimistic item removal and quantity updates in cart badge",
+      "Offline caching support using Hive or SharedPreferences",
+      "Clean test coverage for business logic providers"
+    ],
+    dueDate: "2026-09-28",
+    totalMarks: 100,
+    weightage: 15,
+    status: "Pending",
+    submissionText: "",
+    submissionLink: "",
+    submittedAt: null,
+    marksAwarded: null,
+    grade: null,
+    feedback: null
+  },
+  {
+    id: "asg_6",
+    title: "Fine-Tuning Llama 3 with LoRA & Retrieval-Augmented Generation (RAG)",
+    courseId: 6,
+    courseTitle: "Deep Learning, LLMs & Generative AI Bootcamp",
+    instructor: "Dr. Alan Vance",
+    description: "Implement a hybrid search RAG agent using LangChain, Chroma vector database, and fine-tune an open-source model using parameter-efficient fine-tuning (PEFT/LoRA).",
+    requirements: [
+      "Chunking and embedding pipeline with semantic boundary preservation",
+      "Hybrid dense and sparse vector retrieval reranking with cross-encoders",
+      "Evaluation benchmark showing halluncination reduction by at least 65%",
+      "Clean Python script with Hugging Face integration"
+    ],
+    dueDate: "2026-09-12",
+    totalMarks: 100,
+    weightage: 30,
+    status: "Graded",
+    submissionText: "Completed RAG pipeline with BM25 + BGE-Large embeddings and LoRA fine-tuning adapter weights on Hugging Face.",
+    submissionLink: "https://github.com/alex-morgan/rag-llama3-lora-benchmark",
+    submittedAt: "2026-09-11T20:15:00Z",
+    marksAwarded: 98,
+    grade: "A+",
+    feedback: "Phenomenal work on the hybrid reranking implementation. Hallucination guardrails were documented rigorously."
+  }
+];
+
+export const INITIAL_QUIZZES = [
+  {
+    id: "qz_1",
+    title: "React 19 Hooks, Suspense & Next.js 15 Quiz",
+    courseId: 1,
+    courseTitle: "Mastering React 19 & Next.js 15 Full-Stack",
+    instructor: "Dr. Sarah Jenkins",
+    durationMinutes: 15,
+    totalQuestions: 5,
+    passingPercentage: 70,
+    status: "Available",
+    score: null,
+    completedAt: null,
+    questions: [
+      {
+        id: "q1",
+        question: "What is the primary benefit of React 19 Server Actions?",
+        options: [
+          "They run client-side JavaScript in Web Workers",
+          "They allow server mutations directly from forms without manual API endpoints",
+          "They replace the need for CSS preprocessors",
+          "They run asynchronous code synchronously"
+        ],
+        correctAnswerIndex: 1,
+        explanation: "Server Actions allow forms and functions to execute securely on the server without creating boilerplate REST endpoints."
+      },
+      {
+        id: "q2",
+        question: "Which hook is designed in React 19 to display optimistic UI updates during background operations?",
+        options: [
+          "useOptimistic",
+          "useDeferredState",
+          "usePessimistic",
+          "useBackgroundSync"
+        ],
+        correctAnswerIndex: 0,
+        explanation: "useOptimistic lets developers update the user interface immediately before the server responds."
+      },
+      {
+        id: "q3",
+        question: "In Next.js 15 App Router, what file convention designates a custom fallback UI during Suspense streaming?",
+        options: [
+          "fallback.jsx",
+          "loading.jsx",
+          "spinner.jsx",
+          "skeleton.jsx"
+        ],
+        correctAnswerIndex: 1,
+        explanation: "loading.jsx automatically wraps page segments in a React Suspense boundary."
+      },
+      {
+        id: "q4",
+        question: "What does the React 19 Compiler (React Forget) optimize automatically?",
+        options: [
+          "Database indexes",
+          "Memoization of components and hooks without manual useMemo/useCallback",
+          "Network bandwidth compression",
+          "Image file compression"
+        ],
+        correctAnswerIndex: 1,
+        explanation: "The React Compiler automatically memoizes component render passes and hook computations at build time."
+      },
+      {
+        id: "q5",
+        question: "Which directive explicitly marks a component to execute and render exclusively in the browser?",
+        options: [
+          "'use server'",
+          "'use client'",
+          "'use browser'",
+          "'use hydration'"
+        ],
+        correctAnswerIndex: 1,
+        explanation: "'use client' establishes a boundary between Server and Client component trees."
+      }
+    ]
+  },
+  {
+    id: "qz_2",
+    title: "Python Data Science, NumPy & Pandas Assessment",
+    courseId: 2,
+    courseTitle: "Complete Python for Data Science and Machine Learning",
+    instructor: "Prof. Michael Chen",
+    durationMinutes: 20,
+    totalQuestions: 5,
+    passingPercentage: 70,
+    status: "Completed",
+    score: 80,
+    completedAt: "2026-09-15T11:30:00Z",
+    questions: [
+      {
+        id: "q1",
+        question: "Which Pandas method is used to identify missing or NaN values across a DataFrame?",
+        options: [
+          "df.isna() or df.isnull()",
+          "df.empty()",
+          "df.void()",
+          "df.filterNull()"
+        ],
+        correctAnswerIndex: 0,
+        explanation: "isna() and isnull() return a boolean mask indicating missing values."
+      },
+      {
+        id: "q2",
+        question: "What is the computational benefit of NumPy ndarrays over native Python lists?",
+        options: [
+          "NumPy arrays store elements as contiguous memory blocks with vectorized C-level execution",
+          "NumPy arrays allow unlimited arbitrary data types per array",
+          "NumPy arrays run in the browser without Python",
+          "NumPy arrays require no RAM allocation"
+        ],
+        correctAnswerIndex: 0,
+        explanation: "Vectorized operations and contiguous memory layout make NumPy magnitudes faster than Python lists."
+      },
+      {
+        id: "q3",
+        question: "Which technique prevents data leakage during Scikit-Learn model cross-validation?",
+        options: [
+          "StandardScaler fitted on the entire dataset prior to splitting",
+          "Using sklearn.pipeline.Pipeline to enclose preprocessing and estimators together",
+          "Running train_test_split with shuffle=False",
+          "Normalizing only the target column"
+        ],
+        correctAnswerIndex: 1,
+        explanation: "Scikit-Learn Pipelines fit scalers only on training folds during CV, completely preventing test leakage."
+      },
+      {
+        id: "q4",
+        question: "What does the Area Under the ROC Curve (ROC-AUC) measure?",
+        options: [
+          "Training speed in seconds",
+          "A classifier's ability to discriminate between positive and negative classes across all thresholds",
+          "The mean squared error of regression",
+          "Memory overhead of matrix multiplications"
+        ],
+        correctAnswerIndex: 1,
+        explanation: "ROC-AUC evaluates discrimination performance independent of decision classification thresholds."
+      },
+      {
+        id: "q5",
+        question: "Which function reshapes a wide DataFrame into a long format in Pandas?",
+        options: [
+          "pd.pivot_table()",
+          "pd.melt()",
+          "pd.concat()",
+          "pd.transpose()"
+        ],
+        correctAnswerIndex: 1,
+        explanation: "pd.melt() unpivots a DataFrame from wide format to long format."
+      }
+    ]
+  },
+  {
+    id: "qz_3",
+    title: "UI/UX Heuristics & Figma Prototyping Essentials",
+    courseId: 3,
+    courseTitle: "Modern UI/UX Design with Figma: Concept to Prototype",
+    instructor: "Elena Rostova",
+    durationMinutes: 15,
+    totalQuestions: 5,
+    passingPercentage: 75,
+    status: "Available",
+    score: null,
+    completedAt: null,
+    questions: [
+      {
+        id: "q1",
+        question: "According to Nielsen's 10 Usability Heuristics, what does 'Visibility of System Status' mean?",
+        options: [
+          "Designing high-contrast color palettes",
+          "Keeping users informed about what is going on through appropriate feedback in reasonable time",
+          "Displaying the server IP address on the dashboard",
+          "Making all system source code publicly visible"
+        ],
+        correctAnswerIndex: 1,
+        explanation: "Users should always understand current system state via spinners, progress bars, and status banners."
+      },
+      {
+        id: "q2",
+        question: "In Figma, what feature creates dynamic responsive layouts that automatically adjust spacing when content changes?",
+        options: [
+          "Boolean Groups",
+          "Auto Layout",
+          "Smart Animate",
+          "Vector Network"
+        ],
+        correctAnswerIndex: 1,
+        explanation: "Auto Layout allows frames to hug content, fill containers, or maintain proportional padding."
+      },
+      {
+        id: "q3",
+        question: "What is the WCAG 2.1 AA minimum contrast ratio requirement for standard body text?",
+        options: [
+          "2.5:1",
+          "3.0:1",
+          "4.5:1",
+          "7.0:1"
+        ],
+        correctAnswerIndex: 2,
+        explanation: "WCAG 2.1 AA requires at least 4.5:1 contrast ratio for regular body text."
+      },
+      {
+        id: "q4",
+        question: "What is the primary purpose of a 'Design Token' in modern product design systems?",
+        options: [
+          "Cryptocurrency payment integration",
+          "A platform-agnostic name storing a design value (such as color, spacing, or elevation)",
+          "An SVG export plugin",
+          "A password authentication method"
+        ],
+        correctAnswerIndex: 1,
+        explanation: "Design tokens bridge design and engineering by standardizing variables like colors and spacing across platforms."
+      },
+      {
+        id: "q5",
+        question: "Which Figma prototyping transition matches identical layer names across frames to generate fluid morphing animations?",
+        options: [
+          "Instant",
+          "Dissolve",
+          "Smart Animate",
+          "Push Right"
+        ],
+        correctAnswerIndex: 2,
+        explanation: "Smart Animate recognizes matching layer names and interpolates position, rotation, and size seamlessly."
+      }
+    ]
+  },
+  {
+    id: "qz_4",
+    title: "Docker, Kubernetes & Cloud Architecture Assessment",
+    courseId: 4,
+    courseTitle: "Cloud Computing & DevOps with AWS, Docker & Kubernetes",
+    instructor: "David Miller",
+    durationMinutes: 20,
+    totalQuestions: 5,
+    passingPercentage: 70,
+    status: "Available",
+    score: null,
+    completedAt: null,
+    questions: [
+      {
+        id: "q1",
+        question: "What is the smallest deployable computing unit in a Kubernetes cluster?",
+        options: [
+          "Container",
+          "Pod",
+          "Namespace",
+          "Node"
+        ],
+        correctAnswerIndex: 1,
+        explanation: "A Pod represents a single instance of a running process and can contain one or more co-located containers."
+      },
+      {
+        id: "q2",
+        question: "Why are multi-stage Docker builds recommended in CI/CD pipelines?",
+        options: [
+          "They automatically deploy containers to multiple cloud providers",
+          "They separate build dependencies from the final minimal runtime image to save size and enhance security",
+          "They bypass Docker daemon licensing",
+          "They enable GPU passthrough automatically"
+        ],
+        correctAnswerIndex: 1,
+        explanation: "Multi-stage builds leave compiler tools in intermediate stages, yielding ultra-light production images."
+      },
+      {
+        id: "q3",
+        question: "Which Kubernetes resource routes external HTTP/HTTPS traffic to internal cluster services?",
+        options: [
+          "ConfigMap",
+          "Ingress",
+          "StatefulSet",
+          "PersistentVolume"
+        ],
+        correctAnswerIndex: 1,
+        explanation: "An Ingress controller manages external incoming traffic routing and TLS termination."
+      },
+      {
+        id: "q4",
+        question: "What does Kubernetes HPA (Horizontal Pod Autoscaler) adjust dynamically based on metric metrics?",
+        options: [
+          "CPU clock speeds on physical machines",
+          "The number of Pod replicas in a deployment",
+          "Disk partition sizes",
+          "Network MTU headers"
+        ],
+        correctAnswerIndex: 1,
+        explanation: "HPA scales the number of replica Pods up or down based on observed CPU/memory usage."
+      },
+      {
+        id: "q5",
+        question: "What is Helm in the Kubernetes ecosystem?",
+        options: [
+          "A package manager for templating and managing Kubernetes manifests",
+          "A kernel virtualization driver",
+          "A logging database for stdout logs",
+          "A Docker registry server"
+        ],
+        correctAnswerIndex: 0,
+        explanation: "Helm is the de-facto package manager that templates and bundles complex Kubernetes resources into reusable charts."
+      }
+    ]
+  }
+];
+
+export const MONTHLY_ENROLLMENT_DATA = [
+  { month: 'Jan', enrollments: 45, completions: 20 },
+  { month: 'Feb', enrollments: 62, completions: 31 },
+  { month: 'Mar', enrollments: 78, completions: 42 },
+  { month: 'Apr', enrollments: 71, completions: 46 },
+  { month: 'May', enrollments: 94, completions: 58 },
+  { month: 'Jun', enrollments: 112, completions: 73 },
+  { month: 'Jul', enrollments: 125, completions: 84 },
+  { month: 'Aug', enrollments: 142, completions: 99 },
+  { month: 'Sep', enrollments: 160, completions: 118 }
+];
+
+export const CATEGORY_ENROLLMENT_DATA = [
+  { category: 'Web Development', count: 185, percentage: 28, color: '#4f46e5' },
+  { category: 'Artificial Intelligence', count: 164, percentage: 25, color: '#10b981' },
+  { category: 'Data Science', count: 132, percentage: 20, color: '#06b6d4' },
+  { category: 'Cloud & DevOps', count: 98, percentage: 15, color: '#f59e0b' },
+  { category: 'Mobile Apps', count: 80, percentage: 12, color: '#ec4899' }
+];

@@ -9,12 +9,13 @@ import {
   LogOut,
   BookOpen,
   PlusCircle,
-  ChevronDown
+  ChevronDown,
+  User
 } from 'lucide-react';
 import { toast } from 'react-toastify';
 
 const Navbar = ({ onToggleSidebar, onOpenAddCourse }) => {
-  const { user, logout, switchRole, canManageCourses } = useAuth();
+  const { user, logout, canManageCourses } = useAuth();
   const { searchQuery, setSearchQuery } = useCourses();
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [notificationsOpen, setNotificationsOpen] = useState(false);
@@ -162,36 +163,28 @@ const Navbar = ({ onToggleSidebar, onOpenAddCourse }) => {
 
           {dropdownOpen && (
             <div className="absolute right-0 mt-2 w-64 bg-white rounded-2xl shadow-xl border border-slate-100 p-2.5 animate-fade-in z-50">
-              <div className="px-3 py-2 border-b border-slate-100 mb-2">
-                <p className="text-sm font-semibold text-slate-800">{user?.name}</p>
-                <p className="text-xs text-slate-400 truncate">{user?.email}</p>
-              </div>
-
-              {/* Role Switcher in dropdown */}
-              <div className="px-3 py-2 border-b border-slate-100 mb-2">
-                <p className="text-[10px] uppercase font-bold text-slate-400 tracking-wider mb-2">
-                  Switch Active Role
-                </p>
-                <div className="grid grid-cols-2 gap-1 bg-slate-100 p-1 rounded-xl">
-                  {['Student', 'Instructor'].map((r) => (
-                    <button
-                      key={r}
-                      type="button"
-                      onClick={() => {
-                        switchRole(r);
-                        toast.success(`Role changed to ${r}`);
-                      }}
-                      className={`text-[11px] py-1 rounded-lg font-bold transition-all ${
-                        user?.role === r
-                          ? 'bg-white text-slate-900 shadow-xs'
-                          : 'text-slate-500 hover:text-slate-900'
-                      }`}
-                    >
-                      {r}
-                    </button>
-                  ))}
+              <Link
+                to="/profile"
+                onClick={() => setDropdownOpen(false)}
+                className="block px-3 py-2 border-b border-slate-100 mb-1 rounded-xl hover:bg-slate-50 transition-colors group"
+              >
+                <div className="flex items-center justify-between">
+                  <p className="text-sm font-semibold text-slate-800 group-hover:text-indigo-600 transition-colors">{user?.name}</p>
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded-md">
+                    {user?.role}
+                  </span>
                 </div>
-              </div>
+                <p className="text-xs text-slate-400 truncate mt-0.5">{user?.email}</p>
+              </Link>
+
+              <Link
+                to="/profile"
+                onClick={() => setDropdownOpen(false)}
+                className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-medium text-slate-700 hover:bg-slate-100 transition-colors"
+              >
+                <User className="w-4 h-4 text-indigo-600" />
+                <span>My Profile</span>
+              </Link>
 
               <Link
                 to="/my-courses"

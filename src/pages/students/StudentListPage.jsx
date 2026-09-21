@@ -90,10 +90,6 @@ const StudentListPage = () => {
               <Users className="w-3.5 h-3.5" />
               <span>Learner Directory</span>
             </div>
-            <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-50 border border-emerald-100 text-emerald-700 text-[11px] font-semibold">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-              <span>DummyJSON API Live</span>
-            </div>
           </div>
           <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight">
             Student Management
@@ -342,22 +338,24 @@ const StudentListPage = () => {
 
                     {/* Actions */}
                     <td className="py-4 pr-6 text-center whitespace-nowrap">
-                      <div className="inline-flex items-center gap-1">
+                      <div className="inline-flex items-center gap-1.5">
                         <button
                           type="button"
                           onClick={() => handleOpenEdit(s)}
                           title="Edit student"
-                          className="p-1.5 rounded-lg text-slate-400 hover:text-indigo-600 hover:bg-indigo-50 transition-colors cursor-pointer"
+                          className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg border border-slate-200 text-slate-600 hover:text-indigo-600 hover:border-indigo-300 hover:bg-indigo-50/70 text-xs font-semibold transition-all cursor-pointer shadow-2xs"
                         >
-                          <Edit2 className="w-4 h-4" />
+                          <Edit2 className="w-3.5 h-3.5 text-indigo-500" />
+                          <span>Edit</span>
                         </button>
                         <button
                           type="button"
                           onClick={() => setStudentToDelete(s)}
                           title="Delete student"
-                          className="p-1.5 rounded-lg text-slate-400 hover:text-rose-600 hover:bg-rose-50 transition-colors cursor-pointer"
+                          className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg border border-slate-200 text-slate-600 hover:text-rose-600 hover:border-rose-300 hover:bg-rose-50/70 text-xs font-semibold transition-all cursor-pointer shadow-2xs"
                         >
-                          <Trash2 className="w-4 h-4" />
+                          <Trash2 className="w-3.5 h-3.5 text-rose-500" />
+                          <span>Delete</span>
                         </button>
                       </div>
                     </td>

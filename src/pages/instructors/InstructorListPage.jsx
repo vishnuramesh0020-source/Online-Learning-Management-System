@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useAuth } from '../../context/useAuth';
 import { useInstructors } from '../../context/useInstructors';
 import InstructorFormModal from '../../components/instructors/InstructorFormModal';
 import AssignCourseModal from '../../components/instructors/AssignCourseModal';
@@ -19,6 +20,7 @@ import {
 } from 'lucide-react';
 
 const InstructorListPage = () => {
+  const { canManageCourses } = useAuth();
   const {
     instructors,
     filteredInstructors,
@@ -91,14 +93,16 @@ const InstructorListPage = () => {
           </p>
         </div>
 
-        <button
-          type="button"
-          onClick={handleOpenAdd}
-          className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs sm:text-sm font-semibold shadow-md shadow-indigo-600/20 transition-all hover:scale-[1.02] active:scale-[0.98] self-start sm:self-auto cursor-pointer"
-        >
-          <Plus className="w-4 h-4" />
-          <span>Add Instructor</span>
-        </button>
+        {canManageCourses && (
+          <button
+            type="button"
+            onClick={handleOpenAdd}
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs sm:text-sm font-semibold shadow-md shadow-indigo-600/20 transition-all hover:scale-[1.02] active:scale-[0.98] self-start sm:self-auto cursor-pointer"
+          >
+            <Plus className="w-4 h-4" />
+            <span>Add Instructor</span>
+          </button>
+        )}
       </div>
 
       {/* KPI Overview Cards */}
@@ -235,32 +239,34 @@ const InstructorListPage = () => {
                         </div>
                       </div>
 
-                      <div className="flex items-center gap-1">
-                        <button
-                          type="button"
-                          onClick={() => setInstructorToAssign(inst)}
-                          title="Assign Courses"
-                          className="p-1.5 rounded-lg text-slate-400 hover:text-indigo-600 hover:bg-indigo-50 transition-colors"
-                        >
-                          <BookOpen className="w-4 h-4" />
-                        </button>
-                        <button
-                          type="button"
-                          onClick={() => handleOpenEdit(inst)}
-                          title="Edit Instructor"
-                          className="p-1.5 rounded-lg text-slate-400 hover:text-indigo-600 hover:bg-indigo-50 transition-colors"
-                        >
-                          <Edit2 className="w-4 h-4" />
-                        </button>
-                        <button
-                          type="button"
-                          onClick={() => setInstructorToDelete(inst)}
-                          title="Delete Instructor"
-                          className="p-1.5 rounded-lg text-slate-400 hover:text-rose-600 hover:bg-rose-50 transition-colors"
-                        >
-                          <Trash2 className="w-4 h-4" />
-                        </button>
-                      </div>
+                      {canManageCourses && (
+                        <div className="flex items-center gap-1.5">
+                          <button
+                            type="button"
+                            onClick={() => setInstructorToAssign(inst)}
+                            title="Assign Courses"
+                            className="p-1.5 rounded-lg border border-slate-200/80 text-slate-500 hover:text-indigo-600 hover:border-indigo-300 hover:bg-indigo-50/70 transition-all cursor-pointer shadow-2xs"
+                          >
+                            <BookOpen className="w-4 h-4" />
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => handleOpenEdit(inst)}
+                            title="Edit Instructor"
+                            className="p-1.5 rounded-lg border border-slate-200/80 text-slate-500 hover:text-indigo-600 hover:border-indigo-300 hover:bg-indigo-50/70 transition-all cursor-pointer shadow-2xs"
+                          >
+                            <Edit2 className="w-4 h-4" />
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => setInstructorToDelete(inst)}
+                            title="Delete Instructor"
+                            className="p-1.5 rounded-lg border border-slate-200/80 text-slate-500 hover:text-rose-600 hover:border-rose-300 hover:bg-rose-50/70 transition-all cursor-pointer shadow-2xs"
+                          >
+                            <Trash2 className="w-4 h-4" />
+                          </button>
+                        </div>
+                      )}
                     </div>
 
                     <Link to={`/instructors/${inst.id}`}>

@@ -14,8 +14,11 @@ import EnrolledCoursesPage from './pages/courses/EnrolledCoursesPage';
 import StudentListPage from './pages/students/StudentListPage';
 import EnrollmentManagementPage from './pages/enrollments/EnrollmentManagementPage';
 import LearningProgressPage from './pages/progress/LearningProgressPage';
+import AssignmentsPage from './pages/assignments/AssignmentsPage';
+import ReportsPage from './pages/reports/ReportsPage';
 import InstructorListPage from './pages/instructors/InstructorListPage';
 import InstructorProfilePage from './pages/instructors/InstructorProfilePage';
+import ProfilePage from './pages/profile/ProfilePage';
 import NotFoundPage from './pages/NotFoundPage';
 
 function App() {
@@ -42,11 +45,28 @@ function App() {
           <Route path="/courses" element={<CourseListPage />} />
           <Route path="/courses/:id" element={<CourseDetailPage />} />
           <Route path="/my-courses" element={<EnrolledCoursesPage />} />
-          <Route path="/students" element={<StudentListPage />} />
+          <Route
+            path="/students"
+            element={
+              <ProtectedRoute allowedRoles={['Instructor']}>
+                <StudentListPage />
+              </ProtectedRoute>
+            }
+          />
           <Route path="/enrollments" element={<EnrollmentManagementPage />} />
           <Route path="/progress" element={<LearningProgressPage />} />
+          <Route path="/assignments" element={<AssignmentsPage />} />
+          <Route
+            path="/reports"
+            element={
+              <ProtectedRoute allowedRoles={['Instructor']}>
+                <ReportsPage />
+              </ProtectedRoute>
+            }
+          />
           <Route path="/instructors" element={<InstructorListPage />} />
           <Route path="/instructors/:id" element={<InstructorProfilePage />} />
+          <Route path="/profile" element={<ProfilePage />} />
         </Route>
 
         {/* 404 Catch All */}

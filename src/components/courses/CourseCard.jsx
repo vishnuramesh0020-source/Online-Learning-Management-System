@@ -135,7 +135,7 @@ const CourseCard = ({ course, onEdit, onDelete }) => {
                   e.preventDefault();
                   onEdit(course);
                 }}
-                className="p-1.5 rounded-lg text-slate-400 hover:text-indigo-600 hover:bg-indigo-50 transition-colors"
+                className="p-1.5 rounded-lg border border-slate-200/80 text-slate-500 hover:text-indigo-600 hover:border-indigo-300 hover:bg-indigo-50/70 transition-all cursor-pointer shadow-2xs"
                 title="Edit Course"
               >
                 <Edit2 className="w-3.5 h-3.5" />
@@ -148,7 +148,7 @@ const CourseCard = ({ course, onEdit, onDelete }) => {
                   e.preventDefault();
                   onDelete(course);
                 }}
-                className="p-1.5 rounded-lg text-slate-400 hover:text-rose-600 hover:bg-rose-50 transition-colors"
+                className="p-1.5 rounded-lg border border-slate-200/80 text-slate-500 hover:text-rose-600 hover:border-rose-300 hover:bg-rose-50/70 transition-all cursor-pointer shadow-2xs"
                 title="Delete Course"
               >
                 <Trash2 className="w-3.5 h-3.5" />
@@ -156,7 +156,7 @@ const CourseCard = ({ course, onEdit, onDelete }) => {
             )}
             <Link
               to={`/courses/${course.id}`}
-              className="p-1.5 rounded-lg text-slate-400 hover:text-slate-700 hover:bg-slate-100 transition-colors"
+              className="p-1.5 rounded-lg border border-slate-200/80 text-slate-500 hover:text-slate-800 hover:border-slate-300 hover:bg-slate-100 transition-all cursor-pointer shadow-2xs"
               title="View Details"
             >
               <ExternalLink className="w-3.5 h-3.5" />
@@ -169,10 +169,10 @@ const CourseCard = ({ course, onEdit, onDelete }) => {
           <button
             type="button"
             onClick={handleEnrollClick}
-            className={`w-full py-2 px-3 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-1.5 ${
+            className={`w-full py-2 px-3 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-1.5 cursor-pointer active:scale-[0.98] ${
               isEnrolled
-                ? 'bg-emerald-50 text-emerald-700 border border-emerald-200 hover:bg-emerald-100'
-                : 'bg-indigo-600 hover:bg-indigo-700 text-white shadow-xs'
+                ? 'bg-emerald-50 text-emerald-700 border border-emerald-200 hover:bg-emerald-100 shadow-2xs'
+                : 'bg-indigo-600 hover:bg-indigo-700 text-white shadow-xs hover:shadow-md'
             }`}
           >
             {isEnrolled ? (
