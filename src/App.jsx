@@ -10,7 +10,6 @@ import ForgotPasswordPage from './pages/auth/ForgotPasswordPage';
 import DashboardPage from './pages/dashboard/DashboardPage';
 import CourseListPage from './pages/courses/CourseListPage';
 import CourseDetailPage from './pages/courses/CourseDetailPage';
-import EnrolledCoursesPage from './pages/courses/EnrolledCoursesPage';
 import StudentListPage from './pages/students/StudentListPage';
 import EnrollmentManagementPage from './pages/enrollments/EnrollmentManagementPage';
 import LearningProgressPage from './pages/progress/LearningProgressPage';
@@ -44,7 +43,6 @@ function App() {
           <Route path="/dashboard" element={<DashboardPage />} />
           <Route path="/courses" element={<CourseListPage />} />
           <Route path="/courses/:id" element={<CourseDetailPage />} />
-          <Route path="/my-courses" element={<EnrolledCoursesPage />} />
           <Route
             path="/students"
             element={

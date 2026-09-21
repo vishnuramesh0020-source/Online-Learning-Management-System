@@ -249,7 +249,7 @@ const CourseDetailPage = () => {
                   Preview Course
                 </span>
                 <span className="text-2xl font-black">
-                  {Number(course.price) === 0 ? 'Free' : `$${Number(course.price).toFixed(2)}`}
+                  {Number(course.price) === 0 ? 'Free' : `₹${Number(course.price).toFixed(2)}`}
                 </span>
               </div>
             </div>

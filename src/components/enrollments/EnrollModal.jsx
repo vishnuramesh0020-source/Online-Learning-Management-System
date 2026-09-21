@@ -147,7 +147,7 @@ const EnrollModal = ({ isOpen, onClose, preselectedCourseId = null, preselectedS
                 const enrolled = selectedStudentId && isStudentEnrolled(selectedStudentId, c.id);
                 return (
                   <option key={c.id} value={c.id} disabled={enrolled}>
-                    {c.title} ({c.category}) {enrolled ? '— [Already Enrolled]' : `— $${c.price}`}
+                    {c.title} ({c.category}) {enrolled ? '— [Already Enrolled]' : `— ₹${c.price}`}
                   </option>
                 );
               })}
@@ -179,7 +179,7 @@ const EnrollModal = ({ isOpen, onClose, preselectedCourseId = null, preselectedS
                 <h4 className="font-bold text-slate-900 truncate">{selectedCourse.title}</h4>
                 <p className="text-[11px] text-slate-500">Instructor: {selectedCourse.instructor} • {selectedCourse.duration}</p>
               </div>
-              <span className="text-xs font-bold text-indigo-600">${selectedCourse.price}</span>
+              <span className="text-xs font-bold text-indigo-600">₹{selectedCourse.price}</span>
             </div>
           )}
         </div>

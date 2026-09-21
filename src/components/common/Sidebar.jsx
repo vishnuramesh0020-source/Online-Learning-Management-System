@@ -2,7 +2,6 @@ import { NavLink, Link } from 'react-router-dom';
 import {
   LayoutDashboard,
   GraduationCap,
-  BookOpen,
   PlusCircle,
   X,
   Layers,
@@ -29,11 +28,6 @@ const Sidebar = ({ isOpen, onClose, onOpenAddCourse }) => {
       to: '/courses',
       label: 'Explore Courses',
       icon: Layers
-    },
-    {
-      to: '/my-courses',
-      label: 'My Courses',
-      icon: BookOpen
     },
     {
       to: '/students',

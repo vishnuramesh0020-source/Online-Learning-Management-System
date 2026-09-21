@@ -15,7 +15,7 @@ import {
   PieChart,
   CheckCircle2,
   Filter,
-  DollarSign,
+  IndianRupee,
   Award
 } from 'lucide-react';
 import { toast } from 'react-toastify';
@@ -271,12 +271,12 @@ const ReportsPage = () => {
               Tuition Volume
             </span>
             <div className="w-10 h-10 rounded-xl bg-violet-50 border border-violet-100 flex items-center justify-center text-violet-600">
-              <DollarSign className="w-5 h-5" />
+              <IndianRupee className="w-5 h-5" />
             </div>
           </div>
           <div className="mt-3 flex items-baseline gap-2">
             <span className="text-3xl font-extrabold text-slate-900">
-              ${totalGrossRevenue.toLocaleString()}
+              ₹{totalGrossRevenue.toLocaleString()}
             </span>
             <span className="text-xs text-violet-600 font-medium">Gross Total</span>
           </div>
@@ -551,7 +551,7 @@ const ReportsPage = () => {
                       {c.enrolledStudents?.toLocaleString()} students
                     </td>
                     <td className="py-3 px-3 text-right font-bold text-slate-900">
-                      ${c.price}
+                      ₹{c.price}
                     </td>
                   </tr>
                 ))}

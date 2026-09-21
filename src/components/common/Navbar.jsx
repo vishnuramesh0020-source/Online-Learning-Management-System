@@ -7,7 +7,6 @@ import {
   Bell,
   Search,
   LogOut,
-  BookOpen,
   PlusCircle,
   ChevronDown,
   User
@@ -184,15 +183,6 @@ const Navbar = ({ onToggleSidebar, onOpenAddCourse }) => {
               >
                 <User className="w-4 h-4 text-indigo-600" />
                 <span>My Profile</span>
-              </Link>
-
-              <Link
-                to="/my-courses"
-                onClick={() => setDropdownOpen(false)}
-                className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-medium text-slate-700 hover:bg-slate-100 transition-colors"
-              >
-                <BookOpen className="w-4 h-4 text-indigo-600" />
-                <span>My Enrolled Courses</span>
               </Link>
 
               <button

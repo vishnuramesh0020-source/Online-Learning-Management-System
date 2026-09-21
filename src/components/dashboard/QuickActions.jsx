@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/useAuth';
-import { Compass, PlusCircle, BookOpen, Download, Zap, Award } from 'lucide-react';
+import { Compass, PlusCircle, TrendingUp, Download, Zap, Award } from 'lucide-react';
 import { toast } from 'react-toastify';
 
 const QuickActions = ({ onOpenAddCourse }) => {
@@ -33,11 +33,11 @@ const QuickActions = ({ onOpenAddCourse }) => {
           }
         },
     {
-      title: 'My Enrolled',
+      title: 'Learning Progress',
       description: 'Continue your active lessons',
-      icon: BookOpen,
+      icon: TrendingUp,
       color: 'from-violet-600 to-purple-600',
-      action: () => navigate('/my-courses')
+      action: () => navigate('/progress')
     },
     {
       title: 'Course Catalog',

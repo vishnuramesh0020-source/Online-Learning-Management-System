@@ -58,7 +58,7 @@ const CourseCard = ({ course, onEdit, onDelete }) => {
         {/* Price Tag */}
         <div className="absolute top-3 right-3">
           <span className="text-xs font-extrabold bg-indigo-600 text-white px-2.5 py-1 rounded-lg shadow-sm">
-            {Number(course.price) === 0 ? 'Free' : `$${Number(course.price).toFixed(2)}`}
+            {Number(course.price) === 0 ? 'Free' : `₹${Number(course.price).toFixed(2)}`}
           </span>
         </div>
 

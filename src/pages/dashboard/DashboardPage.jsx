@@ -67,7 +67,7 @@ const DashboardPage = () => {
               <ArrowRight className="w-4 h-4" />
             </Link>
             <Link
-              to="/my-courses"
+              to="/progress"
               className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white/15 hover:bg-white/25 text-white font-semibold text-xs border border-white/20 backdrop-blur-sm transition-all"
             >
               <span>Resume Learning</span>
@@ -132,7 +132,7 @@ const DashboardPage = () => {
               <p className="text-xs text-slate-500 mt-0.5">Jump back into your active course modules</p>
             </div>
             <Link
-              to="/my-courses"
+              to="/progress"
               className="text-xs font-semibold text-indigo-600 hover:text-indigo-700 flex items-center gap-1"
             >
               <span>View All</span>

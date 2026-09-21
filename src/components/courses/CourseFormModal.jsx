@@ -4,7 +4,7 @@ import Modal from '../common/Modal';
 import { useCourses } from '../../context/useCourses';
 import { CATEGORIES } from '../../utils/dummyData';
 import { toast } from 'react-toastify';
-import { Sparkles, Image, BookOpen, User, Tag, Clock, Layers, DollarSign, Star } from 'lucide-react';
+import { Sparkles, Image, BookOpen, User, Tag, Clock, Layers, IndianRupee, Star } from 'lucide-react';
 
 const PRESET_THUMBNAILS = [
   { label: 'React / Web', url: 'https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=800&auto=format&fit=crop&q=80' },
@@ -199,10 +199,10 @@ const CourseFormModal = ({ isOpen, onClose, courseToEdit = null, onSuccess }) =>
           {/* Price */}
           <div>
             <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1">
-              Price ($) *
+              Price (₹) *
             </label>
             <div className="relative">
-              <DollarSign className="w-4 h-4 text-slate-400 absolute left-2.5 top-1/2 -translate-y-1/2" />
+              <IndianRupee className="w-4 h-4 text-slate-400 absolute left-2.5 top-1/2 -translate-y-1/2" />
               <input
                 type="number"
                 step="0.01"

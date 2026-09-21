@@ -570,12 +570,12 @@ const ProfilePage = () => {
               </h3>
               <div className="space-y-2">
                 <Link
-                  to="/my-courses"
+                  to="/courses"
                   className="flex items-center justify-between p-3 rounded-xl hover:bg-slate-50 text-xs font-semibold text-slate-700 transition-colors border border-transparent hover:border-slate-200"
                 >
                   <div className="flex items-center gap-2.5">
                     <BookOpen className="w-4 h-4 text-indigo-600" />
-                    <span>My Enrolled Courses</span>
+                    <span>Explore Courses</span>
                   </div>
                   <ExternalLink className="w-3.5 h-3.5 text-slate-400" />
                 </Link>
